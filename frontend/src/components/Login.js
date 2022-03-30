@@ -21,16 +21,22 @@ const Login = () => {
     })
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    loginUser()
+  }
+
   return (
     <div className="bg-white rounded-xl p-8">
       <h1 className="text-4xl font-semibold text-center">Log in</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="my-5">
           <label
             htmlFor="username"
             className="block font-medium mb-2"
           >
-            Username:
+            Username
           </label>
           <input
             type="text"
@@ -45,7 +51,7 @@ const Login = () => {
             htmlFor="password"
             className="block font-medium mb-2"
           >
-            Password:
+            Password
           </label>
           <input
             type="password"
@@ -56,7 +62,7 @@ const Login = () => {
           />
         </div>
         <button
-          type="button"
+          type="submit"
           onClick={() => loginUser(username, password)}
           className="block my-5 bg-red rounded-md w-full p-1 text-white"
         >

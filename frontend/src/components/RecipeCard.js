@@ -34,7 +34,7 @@ const RecipeCard = ({ id}) => {
             <p>&#128293; {recipe.kcal} kcal</p>
           </div>
         </div>
-        <p className="text-ellipsis overflow-hidden h-3/5">{recipe.summary}</p>
+        <p className="line-clamp-4 truncate overflow-hidden h-3/5">{recipe.summary}</p>
       </div>
     </div>
   )

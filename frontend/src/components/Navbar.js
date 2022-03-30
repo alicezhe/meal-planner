@@ -19,6 +19,7 @@ const Navbar = ({ loggedIn, title }) => {
         <p className="font-medium text-base my-2">Any salad can be a Caesar salad if you stab it enough.</p>
       </div>
       <div className="flex justify-center text-lg font-bold">
+        <Link to="/"></Link>
         {!loggedIn && (
           <LogIn
             className="ml-6 inline-block hover:text-red transition duration-300 cursor-pointer"

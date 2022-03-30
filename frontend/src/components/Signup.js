@@ -31,10 +31,16 @@ const Signup = () => {
     })
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    signupUser()
+  }
+
   return (
     <div className="bg-white rounded-xl p-8">
       <h1 className="text-4xl font-semibold text-center">Sign Up</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="my-5">
           <div className="w-1/2 inline-block pr-2">
             <label
@@ -94,7 +100,7 @@ const Signup = () => {
           />
         </div>
         <button
-          type="button"
+          type="submit"
           onClick={() => signupUser()}
           className="block my-5 bg-red rounded-md w-full p-1 text-white"
         >
