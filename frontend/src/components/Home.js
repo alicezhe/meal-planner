@@ -9,12 +9,12 @@ import '../styles/TagSearch.css'
 
 const Home = () => {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState([])
+  const [results, setResults] = useState([{ id: 12345  }, { id: 12345  }, { id: 12345  }, { id: 12345  }, { id: 12345  }])
   const [tags, setTags] = useState([])
   const [loggedIn, setLoggedIn] = useState('')
   const [byRecipe, setByRecipe] = useState(true)
 
-  const apiKey = '93c826ea462347fca104e57df38fcf1b'
+  const apiKey = 'e15639e1fce043b6a7cefa240347eebc'
 
   const KeyCodes = {
     comma: 188,
@@ -24,13 +24,12 @@ const Home = () => {
   const delimiters = [KeyCodes.comma, KeyCodes.enter]
 
   useEffect(() => {
-    const getRandomRecipes = async () => {
-      const url = encodeURI(`https://api.spoonacular.com/recipes/random?number=1&apiKey=${apiKey}`)
-      const { data } = await axios.get(url)
-      console.log(data)
-      setResults(data.recipes)
-    }
-    getRandomRecipes()
+    // const getRandomRecipes = async () => {
+    //   const url = encodeURI(`https://api.spoonacular.com/recipes/random?number=1&apiKey=${apiKey}`)
+    //   const { data } = await axios.get(url)
+    //   setResults(data.recipes)
+    // }
+    // getRandomRecipes()
   }, [])
 
   useEffect(() => {
@@ -84,20 +83,28 @@ const Home = () => {
         <div className="scroll-div overflow-y-scroll">
           <div>
             <Navbar loggedIn={loggedIn} page="home" />
-            <div className="h-[40px] flex items-start justify-items-center mt-4">
+            <div className="h-fit flex items-start justify-items-center mt-4">
               <div className="h-[40px] w-[40px] bg-red text-white flex justify-center items-center rounded-xl inline-block cursor-pointer">
                 <Search onClick={() => setByRecipe(!byRecipe)}/>
               </div>
-              <form onSubmit={handleSubmit} className="flex justify-items-center h-full">
-                {byRecipe && (
+              {byRecipe && (
+                <form onSubmit={handleSubmit} className="flex justify-items-center h-full">
                   <input 
-                    className="rounded-xl mx-4 h-full w-[450px] py-2 px-4 outline-0"
+                    className="rounded-xl mx-4 mb-3 h-[40px] w-[450px] py-2 px-4 outline-0"
                     value={query}
                     onChange={e => setQuery(e.target.value)}
                     placeholder="Search recipes..."
                   />
-                )}
-                {!byRecipe && (
+                  <button
+                    className="inline rounded-xl bg-medium-gray p-2 h-full hover:bg-red hover:text-white transition duration-300"
+                    type="submit"
+                  >
+                    Search
+                  </button>
+                </form>
+              )}
+              {!byRecipe && (
+                <form onSubmit={handleSubmit} className="flex justify-items-center h-full">
                   <div id="tagSearch" className="inline">
                     <ReactTags
                       tags={tags}
@@ -123,14 +130,14 @@ const Home = () => {
                       placeholder='Search by ingredients...'
                     />
                   </div>
-                )}
-                <button
-                  className="inline rounded-xl bg-medium-gray p-2 h-full hover:bg-red hover:text-white transition duration-300"
-                  type="submit"
-                >
-                  Search
-                </button>
-              </form>
+                  <button
+                    className="inline rounded-xl bg-medium-gray p-2 h-full hover:bg-red hover:text-white transition duration-300"
+                    type="submit"
+                  >
+                    Search
+                  </button>
+                </form>
+              )}
             </div>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8">

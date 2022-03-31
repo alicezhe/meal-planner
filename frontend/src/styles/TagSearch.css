@@ -1,6 +1,24 @@
 #tagSearch .tagsClass {
+  align-items:flex-start;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: visible;
+  max-width: 450px;
+}
+
+#tagSearch .tagInputClass {
+  font-size: 16px;
+}
+
+#tagSearch .tagInputClass input:focus-visible {
+  outline: none;
+}
+
+#tagSearch .tagInputClass input {
   width: 450px;
   height: 40px;
+  background-color: white;
   border-radius: 0.75rem;
   margin-left: 1rem;
   margin-right: 1rem;
@@ -10,24 +28,10 @@
   padding-right: 1rem;
   outline-width: 1px;
   outline-color: #CECECE;
-  background-color: white;
-  display: inline-flex;
-  align-items: center;
-  overflow-x: auto;
-  max-height: 40px;
-}
-
-#tagSearch .tagInputClass {
-  display: inline;
-  font-size: 16px;
-}
-
-#tagSearch .tagInputClass input:focus-visible {
-  outline: none;
 }
 
 #tagSearch .tagClass {
-  background-color: #EBEBEB;
+  background-color: #FFFFFF;
   padding: 0.25rem  0.5rem;
   margin: 1rem 0.25rem 1rem 0rem;
   border-radius: 0.5rem;
@@ -35,16 +39,16 @@
 }
 
 #tagSearch .selectedClass {
-  display: inline;
-  row-gap: 1px;
+  display: block;
+  left: -35px;
+  margin-top: 0.75em;
+  width: 80vw;
+  overflow: scroll;
+  position: relative;
 }
 
 #tagSearch .removeClass {
   margin-left: 0.25rem;
-}
-
-#tagSearch .selectedClass {
-  display: inline;
 }
 
 .scroll-div::-webkit-scrollbar {

@@ -6,10 +6,14 @@ import { Bookmark } from 'react-feather'
 import { set } from 'express/lib/application'
 
 const RecipeCard = ({ id, loggedIn }) => {
-  const [recipe, setRecipe] = useState({})
+  const [recipe, setRecipe] = useState({title: 'Classic French Onion Soup',
+  time: '45',
+  kcal: '412',
+  image: 'https://spoonacular.com/recipeImages/639597-556x370.jpg',
+  summary: 'If you want to add more Mediterranean recipes to your collection, Classic French Onion Soup might be a recipe you should try. For $2.94 per serving, you get a main course that serves 4. One portion of this'})
   const [recipeSaved, setRecipeSaved] = useState(false)
 
-  const apiKey = '93c826ea462347fca104e57df38fcf1b'
+  const apiKey = 'e15639e1fce043b6a7cefa240347eebc'
 
   useEffect(() => {
     const intervalID = setInterval(() => {
@@ -23,13 +27,13 @@ const RecipeCard = ({ id, loggedIn }) => {
   }, [])
 
   useEffect(() => {
-    const loadRecipe = async () => {
-      const { data } = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`)
-      const kcal = data.nutrition.nutrients[0].amount
-      const { title, image, summary, readyInMinutes: time} = data
-      setRecipe({ title, image, summary: parse(summary), time, kcal })
-    }
-    loadRecipe()
+    // const loadRecipe = async () => {
+    //   const { data } = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`)
+    //   const kcal = data.nutrition.nutrients[0].amount
+    //   const { title, image, summary, readyInMinutes: time} = data
+    //   setRecipe({ title, image, summary: parse(summary), time, kcal })
+    // }
+    // loadRecipe()
   }, [])
   
   const save = async () => {
@@ -58,14 +62,14 @@ const RecipeCard = ({ id, loggedIn }) => {
     <div className="relative h-[400px] bg-white rounded-[30px]"> 
       {(loggedIn && !recipeSaved) && (
         <Bookmark 
-          className="absolute top-0 right-0 text-red m-4 hover:fill-red cursor-pointer"
+          className="absolute top-0 right-0 text-white m-4 hover:fill-white cursor-pointer"
           strokeWidth={3} 
           onClick={() => save()}
         />
       )}
       {(loggedIn && recipeSaved) && (
         <Bookmark 
-          className="absolute top-0 right-0 text-red m-4 hover:fill-transparent fill-red cursor-pointer"
+          className="absolute top-0 right-0 text-white m-4 hover:fill-transparent fill-white cursor-pointer"
           strokeWidth={3}
           onClick={() => unsave()}
         />
@@ -73,7 +77,7 @@ const RecipeCard = ({ id, loggedIn }) => {
       <div className={`bg-[url(${recipe.image})] h-1/2 bg-center bg-no-repeat bg-cover rounded-t-[30px]`}></div>
       <div className="w-full h-1/2 p-4 rounded-b-[30px]">
         <div className="h-full pb-2 overflow-y-hidden">  
-          <h3 className="text-red text-xl font-semibold text-center">{recipe.title}</h3>
+          <h3 className="text-red text-xl font-semibold text-center mb-2">{recipe.title}</h3>
           <div className="flex justify-between font-medium mb-2">
             <p>&#9200; {recipe.time} min</p>
             <p>&#128293; {recipe.kcal} kcal</p>
