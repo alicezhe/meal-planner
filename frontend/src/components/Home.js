@@ -15,7 +15,7 @@ const Home = () => {
   const [loggedIn, setLoggedIn] = useState('')
   const [byRecipe, setByRecipe] = useState(true)
 
-  const apiKey = 'e15639e1fce043b6a7cefa240347eebc'
+  const apiKey = '3f220cadbc3646659ca213813545c978'
 
   const KeyCodes = {
     comma: 188,

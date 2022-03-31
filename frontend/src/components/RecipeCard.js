@@ -16,7 +16,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
   const [recipeSaved, setRecipeSaved] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const apiKey = 'e15639e1fce043b6a7cefa240347eebc'
+  const apiKey = '3f220cadbc3646659ca213813545c978'
 
   let navigate = useNavigate()
   const params = { id }
@@ -72,7 +72,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
   }
 
   return (
-    <div className="relative h-[400px] bg-white rounded-[30px]" onClick={goToRecipe}> 
+    <div className="relative h-[400px] bg-white rounded-[30px] m-2 hover:drop-shadow-md transition duration-300" onClick={goToRecipe}> 
       {(loggedIn && !recipeSaved) && (
         <Bookmark 
           className="absolute top-0 right-0 text-white m-4 hover:fill-white cursor-pointer"
@@ -93,7 +93,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
           <h3 className="text-red text-xl font-semibold text-center mb-2">{recipe.title}</h3>
           <div className="w-full text-center mb-2 text-dark-gray">
             {(ingredients && ingredients.length !== 0) && (
-              <p>You are missing {ingredients.map(i => i.name).join(', ').replace(/, ([^,]*)$/, ' and $1')}</p>
+              <p>You are missing {ingredients.map(i => i.name).join(', ').replace(/, ([^,]*)$/, ' and $1')}.</p>
             )}
           </div>
           <div className="flex justify-between font-medium mb-2">

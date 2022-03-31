@@ -35,10 +35,10 @@ const RecipePage = () => {
     return () => clearInterval(intervalID)
   }, [])
 
-  const viewRecipe = () => {
-    // recipe.analyzedInstructions.steps.map(step => console.log(step.step))
-    recipe.analyzedInstructions.map(step => console.log(step.step))
-  }
+  // const viewRecipe = () => {
+  //   recipe.analyzedInstructions.steps.map(step => console.log(step.step))
+  //   recipe.analyzedInstructions.map(step => console.log(step.step))
+  // }
 
   return (
     <>
@@ -76,7 +76,6 @@ const RecipePage = () => {
                 </ol>
               </div>
             </div>
-            <button onClick={viewRecipe}>click</button>
           </div>
         </div>
       </div>
