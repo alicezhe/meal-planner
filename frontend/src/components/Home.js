@@ -70,6 +70,12 @@ const Home = () => {
     setResults(data)
   }
 
+  const searchCuisine = async (cuisine) => {
+    const url = encodeURI(`https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisine}&number=2&apiKey=${apiKey}`)
+    const { data } = await axios.get(url)
+    setResults(data.results)
+  }
+
   const handleDelete = i => setTags(tags.filter((tag, index) => index !== i))
 
   const handleAddition = tag => setTags([...tags, tag])
@@ -87,61 +93,85 @@ const Home = () => {
         <div className="scroll-div overflow-y-scroll">
           <div>
             <Navbar loggedIn={loggedIn} page="home" />
-            <div className="h-fit flex items-start justify-items-center mt-4">
-              <div className="h-[40px] w-[40px] bg-red text-white flex justify-center items-center rounded-xl inline-block cursor-pointer">
-                <Search onClick={() => setByRecipe(!byRecipe)}/>
-              </div>
-              {byRecipe && (
-                <form onSubmit={handleSubmit} className="flex justify-items-center h-full">
-                  <input 
-                    className="rounded-xl mx-4 mb-3 h-[40px] w-[450px] py-2 px-4 outline-0"
-                    value={query}
-                    onChange={e => setQuery(e.target.value)}
-                    placeholder="Search recipes..."
-                  />
-                  <button
-                    className="inline rounded-xl bg-medium-gray p-2 h-full hover:bg-red hover:text-white transition duration-300"
-                    type="submit"
-                  >
-                    Search
-                  </button>
-                </form>
-              )}
-              {!byRecipe && (
-                <form onSubmit={handleSubmit} className="flex justify-items-center h-full">
-                  <div id="tagSearch" className="inline">
-                    <ReactTags
-                      tags={tags}
-                      delimiters={delimiters}
-                      handleDelete={handleDelete}
-                      handleAddition={handleAddition}
-                      handleDrag={handleDrag}
-                      inputFieldPosition="bottom"
-                      autocomplete
-                      classNames={{
-                        tags: 'tagsClass',
-                        tagInput: 'tagInputClass',
-                        tagInputField: 'tagInputFieldClass',
-                        selected: 'selectedClass',
-                        tag: 'tagClass',
-                        remove: 'removeClass',
-                        suggestions: 'suggestionsClass',
-                        activeSuggestion: 'activeSuggestionClass',
-                        editTagInput: 'editTagInputClass',
-                        editTagInputField: 'editTagInputField',
-                        clearAll: 'clearAllClass',
-                      }}
-                      placeholder='Search by ingredients...'
+            <div className="h-fit lg:flex lg:justify-between mt-4">
+              <div className="h-fit flex items-start justify-center">
+                <div className="h-[40px] w-[40px] bg-red text-white flex justify-center items-center rounded-xl inline-block cursor-pointer">
+                  <Search onClick={() => setByRecipe(!byRecipe)}/>
+                </div>
+                {byRecipe && (
+                  <form onSubmit={handleSubmit} className="flex justify-items-center h-full">
+                    <input 
+                      className="rounded-xl mx-4 mb-3 h-[40px] w-[450px] py-2 px-4 outline-0"
+                      value={query}
+                      onChange={e => setQuery(e.target.value)}
+                      placeholder="Search recipes..."
                     />
-                  </div>
-                  <button
-                    className="inline rounded-xl bg-medium-gray p-2 h-full hover:bg-red hover:text-white transition duration-300"
-                    type="submit"
-                  >
-                    Search
+                    <button
+                      className="inline rounded-xl bg-medium-gray p-2 h-full hover:bg-red hover:text-white transition duration-300"
+                      type="submit"
+                    >
+                      Search
+                    </button>
+                  </form>
+                )}
+                {!byRecipe && (
+                  <form onSubmit={handleSubmit} className="flex justify-items-center h-full">
+                    <div id="tagSearch" className="inline">
+                      <ReactTags
+                        tags={tags}
+                        delimiters={delimiters}
+                        handleDelete={handleDelete}
+                        handleAddition={handleAddition}
+                        handleDrag={handleDrag}
+                        inputFieldPosition="bottom"
+                        autocomplete
+                        classNames={{
+                          tags: 'tagsClass',
+                          tagInput: 'tagInputClass',
+                          tagInputField: 'tagInputFieldClass',
+                          selected: 'selectedClass',
+                          tag: 'tagClass',
+                          remove: 'removeClass',
+                          suggestions: 'suggestionsClass',
+                          activeSuggestion: 'activeSuggestionClass',
+                          editTagInput: 'editTagInputClass',
+                          editTagInputField: 'editTagInputField',
+                          clearAll: 'clearAllClass',
+                        }}
+                        placeholder='Search by ingredients...'
+                      />
+                    </div>
+                    <button
+                      className="inline rounded-xl bg-medium-gray p-2 h-full hover:bg-red hover:text-white transition duration-300"
+                      type="submit"
+                    >
+                      Search
+                    </button>
+                  </form>
+                )}
+              </div>
+              <div className="flex justify-center">
+                <div onClick={() => searchCuisine("Chinese")}>
+                  <button className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
+                    &#129377; Chinese
                   </button>
-                </form>
-              )}
+                </div>
+                <div onClick={() => searchCuisine("Italian")}>
+                  <button className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
+                    &#127837; Italian
+                  </button>
+                </div>
+                <div onClick={() => searchCuisine("Japanese")}>
+                  <button className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
+                    &#127843; Japanese
+                  </button>
+                </div>
+                <div onClick={() => searchCuisine("Mexican")}>
+                  <button className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
+                    &#127790; Mexican
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8">
