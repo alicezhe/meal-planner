@@ -68,15 +68,6 @@ router.get('/plan/', async (req, res, next) => {
   }
 })
 
-router.post('/plan/delete', async (req, res, next) => {
-  try {
-    const data = await Plan.deleteMany({})
-    res.json(data)
-  } catch (err) {
-    next(err)
-  }
-})
-
 router.post('/plan/add', isAuthenticated, async (req, res, next) => {
   const { id, title, image, day, time } = req.body
 
@@ -85,7 +76,7 @@ router.post('/plan/add', isAuthenticated, async (req, res, next) => {
 
   if (!['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].includes(dayLower)) {
     res.send('Inputted day is not valid.')
-  } else if (!['breakfast', 'lunch', 'evening', 'other'].includes(timeLower)) {
+  } else if (!['breakfast', 'lunch', 'dinner', 'other'].includes(timeLower)) {
     res.send('Inputted time is not valid.')
   }
 
@@ -95,6 +86,20 @@ router.post('/plan/add', isAuthenticated, async (req, res, next) => {
   try {
     await Plan.updateOne({ username: req.session.username }, { $set: query })
     res.send('User has successfully added recipe to plan.')
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/plan/delete', isAuthenticated, async (req, res, next) => {
+  const { mealId, day, time, title, image} = req.body
+
+  let query = {}
+  query[`plan.${day}.${time}`] = { mealId, title, image }
+
+  try {
+    await Plan.updateOne({ username: req.session.username }, { $pull: query })
+    res.send('User has successfully deleted recipe from plan.')
   } catch (err) {
     next(err)
   }

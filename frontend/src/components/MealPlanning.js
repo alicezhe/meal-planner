@@ -5,6 +5,7 @@ import { Filter } from 'react-feather'
 
 import Navbar from './Navbar'
 import MealPlanCard from './MealPlanCard'
+import '../styles/TagSearch.css'
 
 const MealPlanning = () => {
   const [plan, setPlan] = useState([])
@@ -43,32 +44,36 @@ const MealPlanning = () => {
     <>
       <div className="flex flex-col justify-start w-full h-full bg-light-gray rounded-3xl p-12">
         <Navbar page="planning" />
-        <div className="overflow-y-scroll">
-          <div className="grid grid-cols-7 gap-2">
+        <div className="overflow-hidden h-[90%]">
+          <div className="grid grid-cols-7 gap-6 h-full">
             {daysOfWeek.map(day => (
-              <div className="col-span-1" key={day}> 
+              <div className="col-span-1 h-full" key={day}> 
                 <h2 className="text-red font-bold text-center">{day.charAt(0).toUpperCase() + day.slice(1)}</h2> 
-                {times.map(time => (
-                  <div className="text-center font-bold">
-                    <h3>{time.charAt(0).toUpperCase() + time.slice(1)}</h3>
-                    {(plan[day] && plan[day][time]) && (
-                      <div>
-                        {plan[day][time].map(meal => 
-                          <MealPlanCard 
-                            mealId={meal.mealId}
-                            title={meal.title}
-                            image={meal.image}
-                          />
-                        )}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                <div className="h-full overflow-y-scroll scroll-div">
+                  {times.map(time => (
+                    <div className="text-center font-bold">
+                      {(plan[day] && plan[day][time] && plan[day][time].length !== 0) && (
+                        <div>
+                          <h3>{time.charAt(0).toUpperCase() + time.slice(1)}</h3>
+                          {plan[day][time].map(meal => 
+                            <MealPlanCard 
+                              key={meal.mealId}
+                              mealId={meal.mealId}
+                              title={meal.title}
+                              image={meal.image}
+                              day={day}
+                              time={time}
+                            />
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>            
             ))}
-          </div>  
+          </div>
         </div>
-        <button onClick={() => view()}>Click</button>
       </div>
     </>
   )

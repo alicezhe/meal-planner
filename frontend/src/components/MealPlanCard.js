@@ -1,18 +1,47 @@
 import axios from 'axios'
 import { React, useState, useEffect } from 'react'
 import { WithContext as ReactTags } from 'react-tag-input'
-import { Filter } from 'react-feather'
+import { X } from 'react-feather'
+import { useNavigate, createSearchParams } from 'react-router-dom'
 
 import Navbar from './Navbar'
 import RecipeCard from './RecipeCard'
 
-const MealPlanCard = ({ mealId, title, image }) => {
+const MealPlanCard = ({ mealId, title, image, day, time }) => {
+  const params = { id: mealId }
+
+  let navigate = useNavigate()
+  const goToRecipe = () => {
+    navigate({
+      pathname: 'recipes',
+      search: `?${createSearchParams(params)}`
+    })
+  }
+
+  const deleteRecipe = async () => {
+    await axios.post('/api/plan/delete', { mealId, title, image, day, time })
+    .then((response) => {
+      if (response.data !== 'User has successfully deleted recipe from plan.') {
+        window.alert(response.data)
+      }
+    }, (error) => {
+      window.alert(error)
+    })
+  }
+
   return (
-    <div className="rounded-[30px] h-fit my-2">
+    <div className="relative rounded-xl h-fit my-2">
+      <X
+        className="top-0 right-0 absolute text-red cursor-pointer m-2 hover:text-dark-gray duration-200 transition" 
+        strokeWidth={6}
+        height={16}
+        width={16}
+        onClick={() => deleteRecipe()}
+      />
       <div className="h-[100px]">
-        <div className={`w-full h-full rounded-t-lg bg-[url(${image})] bg-cover bg-center bg-no-repeat`}></div>
+        <div className={`w-full h-full rounded-t-xl bg-[url(${image})] bg-cover bg-center bg-no-repeat`}></div>
       </div>
-      <div className="h-1/2 rounded-b-lg bg-white">
+      <div className="h-1/2 rounded-b-xl bg-white" onClick={() => goToRecipe()}>
         <h3 className="p-2 font-base font-normal">{title}</h3>
       </div>
     </div>
