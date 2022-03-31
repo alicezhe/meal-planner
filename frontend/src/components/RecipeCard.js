@@ -5,7 +5,7 @@ import parse from 'html-react-parser'
 import { Bookmark } from 'react-feather'
 import { set } from 'express/lib/application'
 
-const RecipeCard = ({ id, loggedIn }) => {
+const RecipeCard = ({ id, loggedIn, ingredients }) => {
   const [recipe, setRecipe] = useState({})
   const [recipeSaved, setRecipeSaved] = useState(false)
 
@@ -30,6 +30,8 @@ const RecipeCard = ({ id, loggedIn }) => {
       setRecipe({ title, image, summary: parse(summary), time, kcal })
     }
     loadRecipe()
+    console.log(ingredients)
+    ingredients.map(ingredient => {console.log(ingredient.name)})
   }, [])
   
   const save = async () => {
@@ -74,6 +76,11 @@ const RecipeCard = ({ id, loggedIn }) => {
       <div className="w-full h-1/2 p-4 rounded-b-[30px]">
         <div className="h-full pb-2 overflow-y-hidden">  
           <h3 className="text-red text-xl font-semibold text-center mb-2">{recipe.title}</h3>
+          <div className="w-full text-center mb-2 text-dark-gray">
+            {(ingredients.length !== 0) && (
+              <p>You are missing {ingredients.map(i => i.name).join(', ').replace(/, ([^,]*)$/, ' and $1')}</p>
+            )}
+          </div>
           <div className="flex justify-between font-medium mb-2">
             <p>&#9200; {recipe.time} min</p>
             <p>&#128293; {recipe.kcal} kcal</p>

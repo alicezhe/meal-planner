@@ -64,10 +64,8 @@ const Home = () => {
 
   const searchIngredients = async () => {
     const parsedSearch = tags.map(tag => tag.text).join(',+')
-    const url = encodeURI(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${parsedSearch}&apiKey=${apiKey}`)
+    const url = encodeURI(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${parsedSearch}&ranking=2&number=1&apiKey=${apiKey}`)
     const { data } = await axios.get(url)
-    console.log(url)
-    console.log(data)
     setResults(data)
   }
 
@@ -151,6 +149,7 @@ const Home = () => {
                 key={result.id}
                 id={result.id}
                 loggedIn={true}
+                ingredients={result.missedIngredients?result.missedIngredients:[]}
               />
             )}
           </div>
