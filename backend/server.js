@@ -4,6 +4,7 @@ const path = require('path')
 const session = require('cookie-session')
 
 const accountRouter = require('./routes/account')
+const apiRouter = require('./routes/api')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -28,6 +29,7 @@ app.use(session({
 }))
 
 app.use('/account', accountRouter)
+app.use('/api', apiRouter)
 
 app.get('/favicon.ico', (req, res) => {
   res.status(404).send()

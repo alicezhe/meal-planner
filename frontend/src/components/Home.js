@@ -8,7 +8,7 @@ import RecipeCard from './RecipeCard'
 
 const Home = () => {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState([{ id:12345 }, { id:12345 }, { id:12345 }, { id:12345 }, { id:12345 }])
+  const [results, setResults] = useState([{id: 12345}])
   const [tags, setTags] = useState([])
   const [loggedIn, setLoggedIn] = useState('')
 
@@ -82,7 +82,7 @@ const Home = () => {
                 onChange={e => setQuery(e.target.value)}
                 placeholder="Search recipes..."
               />
-              <button className="rounded-xl bg-medium-gray p-2 h-full" onClick={() => searchRecipes()}>Search</button>
+              <button className="rounded-xl bg-medium-gray p-2 h-full hover:bg-red hover:text-white transition duration-30" onClick={() => searchRecipes()}>Search</button>
             </div>
           </div>
           {/* <h1> React Tags Example </h1>
@@ -103,6 +103,7 @@ const Home = () => {
               <RecipeCard 
                 key={result.id}
                 id={result.id}
+                loggedIn={true}
               />
             )}
           </div>

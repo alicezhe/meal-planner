@@ -14,6 +14,7 @@ router.get('/users', async (req, res, next) => {
     next(err)
   }
 })
+
 router.post('/signup', async (req, res, next) => {
   const { username, password, name } = req.body
 

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { LogIn, LogOut } from 'react-feather'
 import { useNavigate, Link } from 'react-router-dom'
 
-const Navbar = ({ loggedIn, title }) => {
+const Navbar = ({ loggedIn }) => {
 
   let navigate = useNavigate()
 
@@ -19,7 +19,7 @@ const Navbar = ({ loggedIn, title }) => {
         <p className="font-medium text-base my-2">Any salad can be a Caesar salad if you stab it enough.</p>
       </div>
       <div className="flex justify-center text-lg font-bold">
-        <Link to="/"></Link>
+        <Link to="/" className="mx-6 hover:text-red transition duration-300">Recipes</Link>
         {!loggedIn && (
           <LogIn
             className="ml-6 inline-block hover:text-red transition duration-300 cursor-pointer"
