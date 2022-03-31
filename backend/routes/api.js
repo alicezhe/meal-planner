@@ -30,7 +30,7 @@ router.post('/recipes/save', isAuthenticated, async (req, res, next) => {
   const { id } = req.body
 
   try {
-    await User.updateOne({ username: req.session.username }, { $push: { recipes: id }})
+    await User.updateOne({ username: req.session.username }, { $addToSet: { recipes: id }})
     res.send('User has successfully saved recipe.')
   } catch (err) {
     next(err)

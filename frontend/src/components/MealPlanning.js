@@ -10,7 +10,7 @@ const MealPlanning = () => {
   return (
     <>
       <div className="flex flex-col justify-between w-full h-full bg-light-gray rounded-3xl p-12">
-        <Navbar title="Saved Recipes"/>
+        <Navbar page="planning" />
       </div>
     </>
   )

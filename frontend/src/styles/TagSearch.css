@@ -1,0 +1,58 @@
+#tagSearch .tagsClass {
+  width: 450px;
+  height: 40px;
+  border-radius: 0.75rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  outline-width: 1px;
+  outline-color: #CECECE;
+  background-color: white;
+  display: inline-flex;
+  align-items: center;
+  overflow-x: auto;
+  max-height: 40px;
+}
+
+#tagSearch .tagInputClass {
+  display: inline;
+  font-size: 16px;
+}
+
+#tagSearch .tagInputClass input:focus-visible {
+  outline: none;
+}
+
+#tagSearch .tagClass {
+  background-color: #EBEBEB;
+  padding: 0.25rem  0.5rem;
+  margin: 1rem 0.25rem 1rem 0rem;
+  border-radius: 0.5rem;
+  display: inline;
+}
+
+#tagSearch .selectedClass {
+  display: inline;
+  row-gap: 1px;
+}
+
+#tagSearch .removeClass {
+  margin-left: 0.25rem;
+}
+
+#tagSearch .selectedClass {
+  display: inline;
+}
+
+.scroll-div::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scroll-div {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

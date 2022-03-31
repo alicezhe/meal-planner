@@ -101,7 +101,6 @@ const Signup = () => {
         </div>
         <button
           type="submit"
-          onClick={() => signupUser()}
           className="block my-5 bg-red rounded-md w-full p-1 text-white"
         >
           Sign up

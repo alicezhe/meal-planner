@@ -63,7 +63,6 @@ const Login = () => {
         </div>
         <button
           type="submit"
-          onClick={() => loginUser(username, password)}
           className="block my-5 bg-red rounded-md w-full p-1 text-white"
         >
           Log in

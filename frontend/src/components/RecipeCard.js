@@ -6,36 +6,32 @@ import { Bookmark } from 'react-feather'
 import { set } from 'express/lib/application'
 
 const RecipeCard = ({ id, loggedIn }) => {
-  const [recipe, setRecipe] = useState({
-    title: 'Apple Cake',
-    image: 'https://spoonacular.com/recipeImages/632485-556x370.jpg',
-    summary: 'This is apple cake',
-    time: '45',
-    kcal: '300',
-  })
+  const [recipe, setRecipe] = useState({})
   const [recipeSaved, setRecipeSaved] = useState(false)
 
   const apiKey = '93c826ea462347fca104e57df38fcf1b'
 
   useEffect(() => {
-    // const loadRecipe = async () => {
-    //   const { data } = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`)
-    //   const kcal = data.nutrition.nutrients[0].amount
-    //   const { title, image, summary, readyInMinutes: time} = data
-    //   setRecipe({ title, image, summary: parse(summary), time, kcal })
-    // }
-    // loadRecipe()
-
     const intervalID = setInterval(() => {
       const checkSaved = async () => {
         const { data } = await axios.post('/api/recipes/checksaved', { id })
         setRecipeSaved(data)
       }
       checkSaved()
-    }, 2000)
+    }, 1000)
     return () => clearInterval(intervalID)
   }, [])
 
+  useEffect(() => {
+    const loadRecipe = async () => {
+      const { data } = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`)
+      const kcal = data.nutrition.nutrients[0].amount
+      const { title, image, summary, readyInMinutes: time} = data
+      setRecipe({ title, image, summary: parse(summary), time, kcal })
+    }
+    loadRecipe()
+  }, [])
+  
   const save = async () => {
     await axios.post('/api/recipes/save', { id })
     .then((response) => {
@@ -75,15 +71,15 @@ const RecipeCard = ({ id, loggedIn }) => {
         />
       )}
       <div className={`bg-[url(${recipe.image})] h-1/2 bg-center bg-no-repeat bg-cover rounded-t-[30px]`}></div>
-      <div className="w-full h-1/2 p-4">
-        <div className="h-2/5">  
-          <h3 className="text-red text-xl font-semibold text-center">{id} {recipe.title}</h3>
-          <div className="flex justify-between font-medium">
+      <div className="w-full h-1/2 p-4 rounded-b-[30px]">
+        <div className="h-full pb-2 overflow-y-hidden">  
+          <h3 className="text-red text-xl font-semibold text-center">{recipe.title}</h3>
+          <div className="flex justify-between font-medium mb-2">
             <p>&#9200; {recipe.time} min</p>
             <p>&#128293; {recipe.kcal} kcal</p>
           </div>
+          <p>{recipe.summary}</p>
         </div>
-        <p className="overflow-hidden h-3/5">{recipe.summary}</p>
       </div>
     </div>
   )

@@ -3,6 +3,7 @@ import { React, useState, useEffect } from 'react'
 
 import Navbar from './Navbar'
 import RecipeCard from './RecipeCard'
+import '../styles/TagSearch.css'
 
 const SavedRecipes = () => {
   const [recipes, setRecipes] = useState([])
@@ -14,22 +15,24 @@ const SavedRecipes = () => {
         setRecipes(data)
       }
       checkRecipes()
-    }, 2000)
+    }, 1000)
     return () => clearInterval(intervalID)
   }, [])
 
   return (
     <>
-      <div className="flex flex-col justify-between w-full h-full bg-light-gray rounded-3xl p-12">
-        <Navbar title="Saved Recipes" loggedIn={true}/>
-        <div className="grid grid-cols-4 gap-8 mt-8">
-          {recipes.map(recipe => 
-            <RecipeCard 
-              key={recipe}
-              id={recipe}
-              loggedIn={true}
-            />
-          )}
+      <div className="flex flex-col justify-start w-full h-full bg-light-gray rounded-3xl p-12">
+        <Navbar page="saved" loggedIn={true}/>
+        <div className="overflow-y-scroll scroll-div">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8">
+            {recipes.map(recipe => 
+              <RecipeCard 
+                key={recipe}
+                id={recipe}
+                loggedIn={true}
+              />
+            )}
+          </div>
         </div>
       </div>
     </>
