@@ -43,7 +43,7 @@ const MealPlanning = () => {
   return (
     <>
       <div className="flex flex-col justify-start w-full h-full bg-light-gray rounded-3xl p-12">
-        <Navbar page="planning" />
+        <Navbar page="planning" loggedIn={true} />
         <div className="overflow-hidden h-[90%]">
           <div className="grid grid-cols-7 gap-6 h-full">
             {daysOfWeek.map(day => (

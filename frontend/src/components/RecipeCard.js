@@ -2,13 +2,22 @@ import { React, useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import parse from 'html-react-parser'
-import { Bookmark } from 'react-feather'
-import { useSearchParams, useNavigate, createSearchParams } from 'react-router-dom'
+import { Bookmark, Edit2, Check, X } from 'react-feather'
+import { useNavigate, createSearchParams } from 'react-router-dom'
+import { set } from 'express/lib/application'
 
 const RecipeCard = ({ id, loggedIn, ingredients }) => {
-  const [recipe, setRecipe] = useState({})
+  const [recipe, setRecipe] = useState({
+    title: "Cheesecake",
+    image: "https://webknox.com/recipeImages/632485-556x370.jpg",
+    time: "45",
+    kcal: "300",
+    summary: "Apple cake might be just the dessert you are searching for"
+  })
   const [recipeSaved, setRecipeSaved] = useState(false)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [editingOn, setEditingOn] = useState(false)
+  const [day, setDay] = useState('')
+  const [time, setTime] = useState('')
 
   const apiKey = '3f220cadbc3646659ca213813545c978'
 
@@ -66,24 +75,49 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
       search: `?${createSearchParams(params)}`
     })
   }
+  
+  const addToPlan = async () => {
+    await axios.post('/api/plan/add', { id, title:recipe.title, image:recipe.image, day, time })
+    .then((response) => {
+      if (response.data !== 'User has successfully unsaved recipe.') {
+        window.alert(response.data)
+      }
+    }, (error) => {
+      window.alert(error)
+    })
+  }
 
   return (
-    <div className="relative h-[400px] bg-white rounded-[30px] m-2 hover:drop-shadow-md transition duration-300" onClick={goToRecipe}> 
-      {(loggedIn && !recipeSaved) && (
-        <Bookmark 
-          className="absolute top-0 right-0 text-white m-4 hover:fill-white cursor-pointer"
-          strokeWidth={3} 
-          onClick={() => save()}
-        />
-      )}
-      {(loggedIn && recipeSaved) && (
-        <Bookmark 
-          className="absolute top-0 right-0 text-white m-4 hover:fill-transparent fill-white cursor-pointer"
-          strokeWidth={3}
-          onClick={() => unsave()}
-        />
-      )}
-      <div className={`bg-[url(${recipe.image})] h-1/2 bg-center bg-no-repeat bg-cover rounded-t-[30px]`}></div>
+    <div className="relative h-[400px] bg-white rounded-[30px] m-2 hover:drop-shadow-md transition duration-300"> 
+      <div className="absolute top-0 right-0 flex justify-end m-4">
+        {loggedIn && (
+          <Edit2
+            className="text-white mx-2 hover:text-red transition duraction-200 cursor-pointer"
+            strokeWidth={3}
+            width={18} 
+            height={18}
+            onClick={() => setEditingOn(!editingOn)} />
+        )}
+        {(loggedIn && !recipeSaved) && (
+          <Bookmark 
+            className="text-white hover:fill-white cursor-pointer"
+            strokeWidth={3} 
+            width={18}
+            height={18}
+            onClick={() => save()}
+          />
+        )}
+        {(loggedIn && recipeSaved) && (
+          <Bookmark 
+            className="absolute top-0 right-0 text-white m-4 hover:fill-transparent fill-white cursor-pointer"
+            strokeWidth={3}
+            width={18}
+            height={18}
+            onClick={() => unsave()}
+          />
+        )}
+      </div>
+      <div className={`bg-[url(${recipe.image})] h-1/2 bg-center bg-no-repeat bg-cover rounded-t-[30px]`} onClick={goToRecipe}></div>
       <div className="w-full h-1/2 p-4 rounded-b-[30px]">
         <div className="h-full pb-2 overflow-y-hidden">  
           <h3 className="text-red text-xl font-semibold text-center mb-2">{recipe.title}</h3>
@@ -92,12 +126,56 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
               <p className="text-red">You are missing {ingredients.map(i => i.name).join(', ').replace(/, ([^,]*)$/, ' and $1')}.</p>
             )}
           </div>
-          <div className="flex justify-between font-medium mb-2">
-            <p>&#9200; {recipe.time} min</p>
-            <p>&#128293; {recipe.kcal} kcal</p>
-          </div>
           <div>
-            <p>{recipe.summary}</p>
+            {!editingOn && (
+              <>
+                <div className="flex justify-between font-medium mb-2">
+                  <p>&#9200; {recipe.time} min</p>
+                  <p>&#128293; {recipe.kcal} kcal</p>
+                </div>
+                <div>
+                  <p>{recipe.summary}</p>
+                </div>
+              </>
+            )}
+            {editingOn && (
+              <>
+                <div>
+                  <h4 className="text-dark-gray font-bold text-center">Add to meal plan</h4>
+                  <div className="my-2">
+                    <label htmlFor="day">Day: </label>
+                    <input 
+                      id="day" 
+                      className="border border-medium-gray rounded-md outline-none"
+                      onChange={e => setDay(e.target.value)}
+                    />
+                  </div>
+                  <div className="my-2">
+                    <label htmlFor="meal">Meal: </label>
+                    <input 
+                      id="meal" 
+                      className="border border-medium-gray rounded-md outline-none"
+                      onChange={e => setTime(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <Check 
+                    className="text-dark-gray hover:text-red duration-200 transition cursor-pointer" 
+                    strokeWidth={4}
+                    onClick={() => {
+                      addToPlan()
+                      setEditingOn(false)
+                    }}
+                  />
+                  <X 
+                    className="text-dark-gray hover:text-red duration-200 transition cursor-pointer"
+                    strokeWidth={4}
+                    onClick={() => setEditingOn(false)}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

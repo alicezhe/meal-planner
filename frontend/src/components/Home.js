@@ -10,7 +10,7 @@ import '../styles/TagSearch.css'
 
 const Home = () => {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState([])
+  const [results, setResults] = useState([{id:12345}])
   const [tags, setTags] = useState([])
   const [loggedIn, setLoggedIn] = useState('')
   const [byRecipe, setByRecipe] = useState(true)
