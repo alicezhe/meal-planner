@@ -3,6 +3,7 @@ import { React, useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import parse from 'html-react-parser'
 import Navbar from './Navbar'
+import RecipeCard from './RecipeCard'
 
 const RecipePage = () => {
   const [searchParams] = useSearchParams()
@@ -30,6 +31,11 @@ const RecipePage = () => {
         const { data } = await axios.get('/account/isLoggedIn')
         setLoggedIn(data)
       }
+      const checkSaved = async () => {
+        const { data } = await axios.post('/api/recipes/checksaved', { id })
+        setRecipeSaved(data)
+      }
+      checkSaved()
       checkLoggedIn()
     }, 2000)
     return () => clearInterval(intervalID)

@@ -5,6 +5,8 @@ const isAuthenticated = require('../middlewares/isAuthenticated')
 const router = express.Router()
 
 const User = require('../models/user')
+const Plan = require('../models/plan')
+const plan = require('../models/plan')
 
 router.get('/recipes/saved', isAuthenticated, async (req, res, next) => {
   try {
@@ -43,6 +45,47 @@ router.post('/recipes/unsave', isAuthenticated, async (req, res, next) => {
   try {
     const data = await User.updateOne({ username: req.session.username }, { $pull: { recipes : { $in: [id] }}})
     res.send('User has successfully unsaved recipe.')
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/plan/create', async (req, res, next) => {
+  try {
+    const data = await Plan.create({ username: req.session.username })
+    res.json('User has successfully created a meal plan.')
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/plan/', async (req, res, next) => {
+  try {
+    const data = await Plan.findOne({ username: req.session.username })
+    res.json(data)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/plan/add', isAuthenticated, async (req, res, next) => {
+  const { id, title, image, day, time } = req.body
+
+  const dayLower = day.toLowerCase()
+  const timeLower = time.toLowerCase()
+
+  if (!['monday, tuesday, wednesday, thursday, friday, saturday, sunday'].includes(dayLower)) {
+    res.send('Inputted day is not valid.')
+  } else if (!['breakfast', 'lunch', 'evening', 'other'].includes(timeLower)) {
+    res.send('Inputted time is not valid.')
+  }
+
+  let query = {}
+  query[`plan.${day}.${time}`] = {id, title, image}
+
+  try {
+    await Plan.updateOne({ username: req.session.username }, { $set: query })
+    res.send('User has successfully added recipe to plan.')
   } catch (err) {
     next(err)
   }

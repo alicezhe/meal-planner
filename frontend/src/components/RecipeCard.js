@@ -6,13 +6,7 @@ import { Bookmark } from 'react-feather'
 import { useSearchParams, useNavigate, createSearchParams } from 'react-router-dom'
 
 const RecipeCard = ({ id, loggedIn, ingredients }) => {
-  const [recipe, setRecipe] = useState({
-    title: "Scotch eggs",
-    time: "45",
-    kcal: "319",
-    summary: "Need a gluten free and dairy free beverage? Scotch Eggs",
-    image: "https://spoonacular.com/recipeImages/659581-556x370.jpg"
-  })
+  const [recipe, setRecipe] = useState({})
   const [recipeSaved, setRecipeSaved] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -23,23 +17,25 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
 
   useEffect(() => {
     const intervalID = setInterval(() => {
-      const checkSaved = async () => {
-        const { data } = await axios.post('/api/recipes/checksaved', { id })
-        setRecipeSaved(data)
+      if (loggedIn) {
+        const checkSaved = async () => {
+          const { data } = await axios.post('/api/recipes/checksaved', { id })
+          setRecipeSaved(data)
+        }
+        checkSaved()
       }
-      checkSaved()
     }, 1000)
     return () => clearInterval(intervalID)
   }, [])
 
   useEffect(() => {
-    // const loadRecipe = async () => {
-    //   const { data } = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`)
-    //   const kcal = data.nutrition.nutrients[0].amount
-    //   const { title, image, summary, readyInMinutes: time} = data
-    //   setRecipe({ title, image, summary: parse(summary), time, kcal })
-    // }
-    // loadRecipe()
+    const loadRecipe = async () => {
+      const { data } = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`)
+      const kcal = data.nutrition.nutrients[0].amount
+      const { title, image, summary, readyInMinutes: time} = data
+      setRecipe({ title, image, summary: parse(summary), time, kcal })
+    }
+    loadRecipe()
   }, [])
   
   const save = async () => {
@@ -93,14 +89,16 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
           <h3 className="text-red text-xl font-semibold text-center mb-2">{recipe.title}</h3>
           <div className="w-full text-center mb-2 text-dark-gray">
             {(ingredients && ingredients.length !== 0) && (
-              <p>You are missing {ingredients.map(i => i.name).join(', ').replace(/, ([^,]*)$/, ' and $1')}.</p>
+              <p className="text-red">You are missing {ingredients.map(i => i.name).join(', ').replace(/, ([^,]*)$/, ' and $1')}.</p>
             )}
           </div>
           <div className="flex justify-between font-medium mb-2">
             <p>&#9200; {recipe.time} min</p>
             <p>&#128293; {recipe.kcal} kcal</p>
           </div>
-          <p>{recipe.summary}</p>
+          <div>
+            <p>{recipe.summary}</p>
+          </div>
         </div>
       </div>
     </div>

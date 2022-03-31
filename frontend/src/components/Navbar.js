@@ -35,6 +35,7 @@ const Navbar = ({ loggedIn, page, title }) => {
         {(page === 'recipe') && (<h1 className="text-red my-2">{title}</h1>)}
       </div>
       <div className="flex justify-start lg:justify-end items-center text-center text-sm lg:text-lg font-bold">
+        <Link to="/" className="mr-2 lg:mx-6 hover:text-red transition duration-300">Recipes</Link>
         {!loggedIn && (
           <LogIn
             className="ml-2 lg:ml-6 inline-block hover:text-red transition duration-300 cursor-pointer"
@@ -44,7 +45,6 @@ const Navbar = ({ loggedIn, page, title }) => {
         )}
         {loggedIn && (
           <>
-            <Link to="/" className="mr-2 lg:mx-6 hover:text-red transition duration-300">Recipes</Link>
             <Link to="/saved" className="mx-2 lg:mx-6 hover:text-red transition duration-300">Saved Recipes</Link>
             <Link to="/planning" className="mx-2 lg:mx-6 hover:text-red transition duration-300">Meal Planning</Link>
             <LogOut
