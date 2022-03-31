@@ -39,7 +39,7 @@ const planSchema = new Schema({
       dinner: { type: Array },
       other: { type: Array }
     },
-    monday: { 
+    sunday: { 
       breakfast: { type: Array },
       lunch: { type: Array },
       dinner: { type: Array },
