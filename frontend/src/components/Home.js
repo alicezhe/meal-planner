@@ -9,7 +9,7 @@ import '../styles/TagSearch.css'
 
 const Home = () => {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState([{ id: 12345  }, { id: 12345  }, { id: 12345  }, { id: 12345  }, { id: 12345  }])
+  const [results, setResults] = useState([])
   const [tags, setTags] = useState([])
   const [loggedIn, setLoggedIn] = useState('')
   const [byRecipe, setByRecipe] = useState(true)
@@ -46,7 +46,11 @@ const Home = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    searchRecipes()
+    if (byRecipe) {
+      searchRecipes() 
+    } else {
+      searchIngredients()
+    }
     setQuery('')
   }
 
@@ -62,7 +66,8 @@ const Home = () => {
     const parsedSearch = tags.map(tag => tag.text).join(',+')
     const url = encodeURI(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${parsedSearch}&apiKey=${apiKey}`)
     const { data } = await axios.get(url)
-
+    console.log(url)
+    console.log(data)
     setResults(data)
   }
 

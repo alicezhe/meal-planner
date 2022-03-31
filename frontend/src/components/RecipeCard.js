@@ -6,11 +6,7 @@ import { Bookmark } from 'react-feather'
 import { set } from 'express/lib/application'
 
 const RecipeCard = ({ id, loggedIn }) => {
-  const [recipe, setRecipe] = useState({title: 'Classic French Onion Soup',
-  time: '45',
-  kcal: '412',
-  image: 'https://spoonacular.com/recipeImages/639597-556x370.jpg',
-  summary: 'If you want to add more Mediterranean recipes to your collection, Classic French Onion Soup might be a recipe you should try. For $2.94 per serving, you get a main course that serves 4. One portion of this'})
+  const [recipe, setRecipe] = useState({})
   const [recipeSaved, setRecipeSaved] = useState(false)
 
   const apiKey = 'e15639e1fce043b6a7cefa240347eebc'
@@ -27,13 +23,13 @@ const RecipeCard = ({ id, loggedIn }) => {
   }, [])
 
   useEffect(() => {
-    // const loadRecipe = async () => {
-    //   const { data } = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`)
-    //   const kcal = data.nutrition.nutrients[0].amount
-    //   const { title, image, summary, readyInMinutes: time} = data
-    //   setRecipe({ title, image, summary: parse(summary), time, kcal })
-    // }
-    // loadRecipe()
+    const loadRecipe = async () => {
+      const { data } = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`)
+      const kcal = data.nutrition.nutrients[0].amount
+      const { title, image, summary, readyInMinutes: time} = data
+      setRecipe({ title, image, summary: parse(summary), time, kcal })
+    }
+    loadRecipe()
   }, [])
   
   const save = async () => {
