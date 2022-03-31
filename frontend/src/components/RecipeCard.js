@@ -3,13 +3,23 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import parse from 'html-react-parser'
 import { Bookmark } from 'react-feather'
-import { set } from 'express/lib/application'
+import { useSearchParams, useNavigate, createSearchParams } from 'react-router-dom'
 
 const RecipeCard = ({ id, loggedIn, ingredients }) => {
-  const [recipe, setRecipe] = useState({})
+  const [recipe, setRecipe] = useState({
+    title: "Scotch eggs",
+    time: "45",
+    kcal: "319",
+    summary: "Need a gluten free and dairy free beverage? Scotch Eggs",
+    image: "https://spoonacular.com/recipeImages/659581-556x370.jpg"
+  })
   const [recipeSaved, setRecipeSaved] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const apiKey = 'e15639e1fce043b6a7cefa240347eebc'
+
+  let navigate = useNavigate()
+  const params = { id }
 
   useEffect(() => {
     const intervalID = setInterval(() => {
@@ -23,15 +33,13 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
   }, [])
 
   useEffect(() => {
-    const loadRecipe = async () => {
-      const { data } = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`)
-      const kcal = data.nutrition.nutrients[0].amount
-      const { title, image, summary, readyInMinutes: time} = data
-      setRecipe({ title, image, summary: parse(summary), time, kcal })
-    }
-    loadRecipe()
-    console.log(ingredients)
-    ingredients.map(ingredient => {console.log(ingredient.name)})
+    // const loadRecipe = async () => {
+    //   const { data } = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`)
+    //   const kcal = data.nutrition.nutrients[0].amount
+    //   const { title, image, summary, readyInMinutes: time} = data
+    //   setRecipe({ title, image, summary: parse(summary), time, kcal })
+    // }
+    // loadRecipe()
   }, [])
   
   const save = async () => {
@@ -56,8 +64,15 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
     })
   }
 
+  const goToRecipe = () => {
+    navigate({
+      pathname: 'recipes',
+      search: `?${createSearchParams(params)}`
+    })
+  }
+
   return (
-    <div className="relative h-[400px] bg-white rounded-[30px]"> 
+    <div className="relative h-[400px] bg-white rounded-[30px]" onClick={goToRecipe}> 
       {(loggedIn && !recipeSaved) && (
         <Bookmark 
           className="absolute top-0 right-0 text-white m-4 hover:fill-white cursor-pointer"
@@ -77,7 +92,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
         <div className="h-full pb-2 overflow-y-hidden">  
           <h3 className="text-red text-xl font-semibold text-center mb-2">{recipe.title}</h3>
           <div className="w-full text-center mb-2 text-dark-gray">
-            {(ingredients.length !== 0) && (
+            {(ingredients && ingredients.length !== 0) && (
               <p>You are missing {ingredients.map(i => i.name).join(', ').replace(/, ([^,]*)$/, ' and $1')}</p>
             )}
           </div>

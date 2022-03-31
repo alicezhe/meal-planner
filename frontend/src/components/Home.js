@@ -2,6 +2,7 @@ import axios from 'axios'
 import { React, useState, useEffect } from 'react'
 import { WithContext as ReactTags } from 'react-tag-input'
 import { Search } from 'react-feather'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import Navbar from './Navbar'
 import RecipeCard from './RecipeCard'
@@ -9,7 +10,7 @@ import '../styles/TagSearch.css'
 
 const Home = () => {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState([])
+  const [results, setResults] = useState([{id:12345}])
   const [tags, setTags] = useState([])
   const [loggedIn, setLoggedIn] = useState('')
   const [byRecipe, setByRecipe] = useState(true)

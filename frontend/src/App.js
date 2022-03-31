@@ -10,6 +10,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import SavedRecipes from './components/SavedRecipes'
 import MealPlanning from './components/MealPlanning'
+import RecipePage from './components/RecipePage'
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="signup" element={<Signup />} />
           <Route path="saved" element={<SavedRecipes />} />
           <Route path="planning" element={<MealPlanning />} />
+          <Route path="recipes" element={<RecipePage />} />
         </Routes>
       </div>
     </Router>
