@@ -81,10 +81,10 @@ router.post('/plan/add', isAuthenticated, async (req, res, next) => {
   }
 
   let query = {}
-  query[`plan.${day}.${time}`] = {mealId: id, title, image}
+  query[`plan.${dayLower}.${timeLower}`] = {mealId: id, title, image}
 
   try {
-    await Plan.updateOne({ username: req.session.username }, { $set: query })
+    const response = await Plan.updateOne({ username: req.session.username }, { $set: query })
     res.send('User has successfully added recipe to plan.')
   } catch (err) {
     next(err)

@@ -31,11 +31,11 @@ const RecipePage = () => {
         const { data } = await axios.get('/account/isLoggedIn')
         setLoggedIn(data)
       }
-      const checkSaved = async () => {
-        const { data } = await axios.post('/api/recipes/checksaved', { id })
-        setRecipeSaved(data)
-      }
-      checkSaved()
+      // const checkSaved = async () => {
+      //   const { data } = await axios.post('/api/recipes/checksaved', { id })
+      //   setRecipeSaved(data)
+      // }
+      // checkSaved()
       checkLoggedIn()
     }, 2000)
     return () => clearInterval(intervalID)

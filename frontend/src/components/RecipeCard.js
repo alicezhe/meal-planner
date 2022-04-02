@@ -7,13 +7,7 @@ import { useNavigate, createSearchParams } from 'react-router-dom'
 import { set } from 'express/lib/application'
 
 const RecipeCard = ({ id, loggedIn, ingredients }) => {
-  const [recipe, setRecipe] = useState({
-    title: "Cheesecake",
-    image: "https://webknox.com/recipeImages/632485-556x370.jpg",
-    time: "45",
-    kcal: "300",
-    summary: "Apple cake might be just the dessert you are searching for"
-  })
+  const [recipe, setRecipe] = useState({})
   const [recipeSaved, setRecipeSaved] = useState(false)
   const [editingOn, setEditingOn] = useState(false)
   const [day, setDay] = useState('')
@@ -79,9 +73,10 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
   const addToPlan = async () => {
     await axios.post('/api/plan/add', { id, title:recipe.title, image:recipe.image, day, time })
     .then((response) => {
-      if (response.data !== 'User has successfully unsaved recipe.') {
-        window.alert(response.data)
-      }
+      window.alert(response.data)
+      // if (response.data !== 'User has successfully added recipe to plan.') {
+        
+      // }
     }, (error) => {
       window.alert(error)
     })
@@ -109,7 +104,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
         )}
         {(loggedIn && recipeSaved) && (
           <Bookmark 
-            className="absolute top-0 right-0 text-white m-4 hover:fill-transparent fill-white cursor-pointer"
+            className="text-white hover:fill-transparent fill-white cursor-pointer"
             strokeWidth={3}
             width={18}
             height={18}
@@ -141,7 +136,6 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
             {editingOn && (
               <>
                 <div>
-                  <h4 className="text-dark-gray font-bold text-center">Add to meal plan</h4>
                   <div className="my-2">
                     <label htmlFor="day">Day: </label>
                     <input 

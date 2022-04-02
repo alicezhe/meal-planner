@@ -23,7 +23,7 @@ const MealPlanning = () => {
         const getPlan = async () => {
           const { data } = await axios.get('/api/plan')
           setPlan(data.plan)
-          //data.plan.monday.breakfast.map(meal => console.log(meal))
+          //console.log(data.plan)
         }
         //checkLoggedIn()
         getPlan()
@@ -49,11 +49,11 @@ const MealPlanning = () => {
             {daysOfWeek.map(day => (
               <div className="col-span-1 h-full" key={day}> 
                 <h2 className="text-red font-bold text-center">{day.charAt(0).toUpperCase() + day.slice(1)}</h2> 
-                <div className="h-full overflow-y-scroll scroll-div">
+                <div className="h-[95%] overflow-y-scroll scroll-div">
                   {times.map(time => (
-                    <div className="text-center font-bold">
+                    <div className="text-center font-bold" key={`${time}`}>
                       {(plan[day] && plan[day][time] && plan[day][time].length !== 0) && (
-                        <div>
+                        <div key={`${day}-${time}`}>
                           <h3>{time.charAt(0).toUpperCase() + time.slice(1)}</h3>
                           {plan[day][time].map(meal => 
                             <MealPlanCard 
