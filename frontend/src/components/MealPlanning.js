@@ -11,7 +11,7 @@ const MealPlanning = () => {
   const [plan, setPlan] = useState([])
   const [loggedIn, setLoggedIn] = useState(false)
 
-  const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+  const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
   const times = ['breakfast', 'lunch', 'dinner', 'other']
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const MealPlanning = () => {
   
   const view = () => {
     //plan.monday.breakfast.map(meal => console.log(meal.title))
-    daysOfWeek.map(day => {
+    days.map(day => {
       times.map(time => {
         plan[day][time].map(recipe => console.log(recipe.title))
       })
@@ -46,7 +46,7 @@ const MealPlanning = () => {
         <Navbar page="planning" loggedIn={true} />
         <div className="overflow-hidden h-[90%]">
           <div className="grid grid-cols-7 gap-6 h-full">
-            {daysOfWeek.map(day => (
+            {days.map(day => (
               <div className="col-span-1 h-full" key={day}> 
                 <h2 className="text-red font-bold text-center">{day.charAt(0).toUpperCase() + day.slice(1)}</h2> 
                 <div className="h-[95%] overflow-y-scroll scroll-div">

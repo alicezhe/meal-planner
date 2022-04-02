@@ -7,11 +7,14 @@ import { useNavigate, createSearchParams } from 'react-router-dom'
 import { set } from 'express/lib/application'
 
 const RecipeCard = ({ id, loggedIn, ingredients }) => {
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+  const times = ['Breakfast', 'Lunch', 'Dinner', 'Other']
+
   const [recipe, setRecipe] = useState({})
   const [recipeSaved, setRecipeSaved] = useState(false)
   const [editingOn, setEditingOn] = useState(false)
-  const [day, setDay] = useState('')
-  const [time, setTime] = useState('')
+  const [selectedDay, setSelectedDay] = useState(days[0])
+  const [selectedTime, setSelectedTime] = useState(times[0])
 
   const apiKey = '3f220cadbc3646659ca213813545c978'
 
@@ -71,12 +74,11 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
   }
   
   const addToPlan = async () => {
-    await axios.post('/api/plan/add', { id, title:recipe.title, image:recipe.image, day, time })
+    await axios.post('/api/plan/add', { id, title:recipe.title, image:recipe.image, day: selectedDay, time: selectedTime })
     .then((response) => {
-      window.alert(response.data)
-      // if (response.data !== 'User has successfully added recipe to plan.') {
-        
-      // }
+      if (response.data !== 'User has successfully added recipe to plan.') {
+        window.alert(response.data)
+      }
     }, (error) => {
       window.alert(error)
     })
@@ -136,21 +138,32 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
             {editingOn && (
               <>
                 <div>
+                  <form>
+                      
+                  </form>
                   <div className="my-2">
                     <label htmlFor="day">Day: </label>
-                    <input 
+                    <select 
                       id="day" 
-                      className="border border-medium-gray rounded-md outline-none"
-                      onChange={e => setDay(e.target.value)}
-                    />
+                      className="outline-0"
+                      value={selectedDay}
+                      onChange={e => setSelectedDay(e.target.value)}>
+                      {days.map(day => (
+                        <option key={day} value={`${day.toLowerCase()}`}>{day}</option>
+                      ))}
+                    </select>
                   </div>
                   <div className="my-2">
-                    <label htmlFor="meal">Meal: </label>
-                    <input 
-                      id="meal" 
-                      className="border border-medium-gray rounded-md outline-none"
-                      onChange={e => setTime(e.target.value)}
-                    />
+                    <label htmlFor="time">Time: </label>
+                    <select 
+                      id="time" 
+                      className="outline-0"
+                      value={selectedTime}
+                      onChange={e => setSelectedTime(e.target.value)}>
+                      {times.map(time => (
+                        <option key={time} value={`${time.toLowerCase()}`}>{time}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
                 <div className="flex justify-end">
