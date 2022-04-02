@@ -30,7 +30,7 @@ const MealPlanCard = ({ mealId, title, image, day, time }) => {
   }
 
   return (
-    <div className="relative rounded-xl h-fit my-2">
+    <div className="relative rounded-xl h-fit my-2 hover:drop-shadow-md transition duration-200">
       <X
         className="top-0 right-0 absolute text-red cursor-pointer m-2 hover:text-dark-gray duration-200 transition" 
         strokeWidth={6}

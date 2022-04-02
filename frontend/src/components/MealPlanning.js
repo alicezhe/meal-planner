@@ -49,7 +49,7 @@ const MealPlanning = () => {
             {days.map(day => (
               <div className="col-span-1 h-full" key={day}> 
                 <h2 className="text-red font-bold text-center">{day.charAt(0).toUpperCase() + day.slice(1)}</h2> 
-                <div className="h-[95%] overflow-y-scroll scroll-div">
+                <div className="h-[65vh] overflow-y-scroll scroll-div">
                   {times.map(time => (
                     <div className="text-center font-bold" key={`${time}`}>
                       {(plan[day] && plan[day][time] && plan[day][time].length !== 0) && (

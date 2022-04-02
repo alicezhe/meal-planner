@@ -15,7 +15,7 @@ const Home = () => {
   const [loggedIn, setLoggedIn] = useState('')
   const [byRecipe, setByRecipe] = useState(true)
 
-  const apiKey = '3f220cadbc3646659ca213813545c978'
+  const apiKey = '93c826ea462347fca104e57df38fcf1b'
 
   const KeyCodes = {
     comma: 188,
@@ -179,7 +179,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8">
             {results.map(result => 
               <RecipeCard 
                 key={result.id}

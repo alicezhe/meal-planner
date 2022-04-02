@@ -11,7 +11,7 @@ const RecipePage = () => {
   const [recipe, setRecipe] = useState({})
   const [loggedIn, setLoggedIn] = useState(false)
 
-  const apiKey = '3f220cadbc3646659ca213813545c978'
+  const apiKey = '93c826ea462347fca104e57df38fcf1b'
 
   useEffect(() => {
     const loadRecipe = async () => {

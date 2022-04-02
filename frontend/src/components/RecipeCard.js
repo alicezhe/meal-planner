@@ -16,7 +16,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
   const [selectedDay, setSelectedDay] = useState(days[0])
   const [selectedTime, setSelectedTime] = useState(times[0])
 
-  const apiKey = '3f220cadbc3646659ca213813545c978'
+  const apiKey = '93c826ea462347fca104e57df38fcf1b'
 
   let navigate = useNavigate()
   const params = { id }

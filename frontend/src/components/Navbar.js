@@ -6,7 +6,7 @@ import { useNavigate, Link } from 'react-router-dom'
 const Navbar = ({ loggedIn, page, title }) => {
   const [joke, setJoke] = useState('')
 
-  const apiKey = 'e15639e1fce043b6a7cefa240347eebc'
+  const apiKey = '93c826ea462347fca104e57df38fcf1b'
   let navigate = useNavigate()
 
   const logOut = async () => {
@@ -14,11 +14,11 @@ const Navbar = ({ loggedIn, page, title }) => {
   }
 
   useEffect(() => {
-    // const getJoke = async () => {
-    //   const { data } = await axios.get(`https://api.spoonacular.com/food/jokes/random?apiKey=${apiKey}`)
-    //   setJoke(data.text.length < 120 ? joke : '')
-    // }
-    // getJoke()
+    const getJoke = async () => {
+      const { data } = await axios.get(`https://api.spoonacular.com/food/jokes/random?apiKey=${apiKey}`)
+      setJoke(data.text.length < 120 ? joke : '')
+    }
+    getJoke()
   }, [])
 
   return (
