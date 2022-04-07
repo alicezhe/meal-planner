@@ -2,7 +2,6 @@ import axios from 'axios'
 import { React, useState, useEffect } from 'react'
 import { WithContext as ReactTags } from 'react-tag-input'
 import { Search } from 'react-feather'
-import { Link, useSearchParams } from 'react-router-dom'
 
 import Navbar from './Navbar'
 import RecipeCard from './RecipeCard'
@@ -60,7 +59,6 @@ const Home = () => {
     const { data } = await axios.get(url)
 
     setResults(data.results)
-    //setResults([{ id:12345 }])
   }
 
   const searchIngredients = async () => {

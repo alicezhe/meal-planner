@@ -17,6 +17,7 @@ const RecipePage = () => {
   useEffect(() => {
     const loadRecipe = async () => {
       const { data } = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`)
+      console.log(data)
       const kcal = data.nutrition.nutrients[0].amount
       let { title, image, summary, readyInMinutes: time, extendedIngredients, analyzedInstructions} = data
       analyzedInstructions = analyzedInstructions ? analyzedInstructions[0].steps : []

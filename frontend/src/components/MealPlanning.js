@@ -16,23 +16,16 @@ const MealPlanning = () => {
 
   useEffect(() => {
     const intervalID = setInterval(() => {
-        // const checkLoggedIn = async () => {
-        //   const { data } = await axios.get('/account/isLoggedIn')
-        //   setLoggedIn(data?true:false)
-        // }
         const getPlan = async () => {
           const { data } = await axios.get('/api/plan')
           setPlan(data.plan)
-          //console.log(data.plan)
         }
-        //checkLoggedIn()
         getPlan()
       }, 1000)
     return () => clearInterval(intervalID)
   }, [])
   
   const view = () => {
-    //plan.monday.breakfast.map(meal => console.log(meal.title))
     days.map(day => {
       times.map(time => {
         plan[day][time].map(recipe => console.log(recipe.title))
