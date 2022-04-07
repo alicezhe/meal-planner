@@ -1,21 +1,18 @@
 import axios from 'axios'
-import { React, useState, useEffect } from 'react'
-import { WithContext as ReactTags } from 'react-tag-input'
+import { React } from 'react'
 import { X } from 'react-feather'
-import { useNavigate, createSearchParams } from 'react-router-dom'
-
-import Navbar from './Navbar'
-import RecipeCard from './RecipeCard'
+import { useNavigate, createSearchParams, generatePath } from 'react-router-dom'
 
 const MealPlanCard = ({ mealId, title, image, day, time }) => {
   const params = { id: mealId }
 
   let navigate = useNavigate()
   const goToRecipe = () => {
-    navigate({
-      pathname: 'recipes',
-      search: `?${createSearchParams(params)}`
+    const path = generatePath(":url?:queryString", {
+      url: '/recipes',
+      queryString: createSearchParams(params).toString()
     })
+    navigate(path)
   }
 
   const deleteRecipe = async () => {

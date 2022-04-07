@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import axios from 'axios'
 import parse from 'html-react-parser'
 import { Bookmark, Edit2, Check, X } from 'react-feather'
-import { useNavigate, createSearchParams } from 'react-router-dom'
+import { useNavigate, createSearchParams, generatePath } from 'react-router-dom'
 
 const RecipeCard = ({ id, loggedIn, ingredients }) => {
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -66,10 +66,11 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
   }
 
   const goToRecipe = () => {
-    navigate({
-      pathname: 'recipes',
-      search: `?${createSearchParams(params)}`
+    const path = generatePath(":url?:queryString", {
+      url: '/recipes',
+      queryString: createSearchParams(params).toString()
     })
+    navigate(path)
   }
   
   const addToPlan = async () => {
