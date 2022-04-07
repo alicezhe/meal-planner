@@ -1,10 +1,8 @@
 import { React, useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import parse from 'html-react-parser'
 import { Bookmark, Edit2, Check, X } from 'react-feather'
 import { useNavigate, createSearchParams } from 'react-router-dom'
-import { set } from 'express/lib/application'
 
 const RecipeCard = ({ id, loggedIn, ingredients }) => {
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -16,7 +14,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
   const [selectedDay, setSelectedDay] = useState(days[0])
   const [selectedTime, setSelectedTime] = useState(times[0])
 
-  const apiKey = '93c826ea462347fca104e57df38fcf1b'
+  const apiKey = '3f220cadbc3646659ca213813545c978'
 
   let navigate = useNavigate()
   const params = { id }
@@ -47,6 +45,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
   const save = async () => {
     await axios.post('/api/recipes/save', { id })
     .then((response) => {
+      setRecipeSaved(true)
       if (response.data !== 'User has successfully saved recipe.') {
         window.alert(response.data)
       }

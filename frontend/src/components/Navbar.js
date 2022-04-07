@@ -6,7 +6,7 @@ import { useNavigate, Link } from 'react-router-dom'
 const Navbar = ({ loggedIn, page, title }) => {
   const [joke, setJoke] = useState('')
 
-  const apiKey = '93c826ea462347fca104e57df38fcf1b'
+  const apiKey = '3f220cadbc3646659ca213813545c978'
   let navigate = useNavigate()
 
   const logOut = async () => {
