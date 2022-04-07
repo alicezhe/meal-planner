@@ -3,13 +3,13 @@ import { React, useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import parse from 'html-react-parser'
 import Navbar from './Navbar'
-import RecipeCard from './RecipeCard'
 
 const RecipePage = () => {
   const [searchParams] = useSearchParams()
   const [id, setId] = useState(searchParams.get('id'))
   const [recipe, setRecipe] = useState({})
   const [loggedIn, setLoggedIn] = useState(false)
+  const [recipeSaved, setRecipeSaved] = useState(false)
 
   const apiKey = '93c826ea462347fca104e57df38fcf1b'
 
@@ -17,7 +17,6 @@ const RecipePage = () => {
     const loadRecipe = async () => {
       const { data } = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`)
       const kcal = data.nutrition.nutrients[0].amount
-      console.log(data)
       let { title, image, summary, readyInMinutes: time, extendedIngredients, analyzedInstructions} = data
       analyzedInstructions = analyzedInstructions ? analyzedInstructions[0].steps : []
       setRecipe({ title, image, summary: parse(summary), time, kcal, extendedIngredients, analyzedInstructions })
@@ -31,20 +30,16 @@ const RecipePage = () => {
         const { data } = await axios.get('/account/isLoggedIn')
         setLoggedIn(data)
       }
-      // const checkSaved = async () => {
-      //   const { data } = await axios.post('/api/recipes/checksaved', { id })
-      //   setRecipeSaved(data)
-      // }
-      // checkSaved()
+      const checkSaved = async () => {
+        const { data } = await axios.post('/api/recipes/checksaved', { id })
+        setRecipeSaved(data)
+        console.log(id, data)
+      }
       checkLoggedIn()
+      //checkSaved()
     }, 2000)
     return () => clearInterval(intervalID)
   }, [])
-
-  // const viewRecipe = () => {
-  //   recipe.analyzedInstructions.steps.map(step => console.log(step.step))
-  //   recipe.analyzedInstructions.map(step => console.log(step.step))
-  // }
 
   return (
     <>
@@ -61,6 +56,7 @@ const RecipePage = () => {
           </div>
           <div className="grid grid-cols-none md:grid-cols-3">
             <div className="md:col-span-1">
+              <div>{recipeSaved}</div>
               <h3 className="text-red text-xl font-bold">Ingredients</h3>
               <div>
                 <ul style={{columns: 2}}>

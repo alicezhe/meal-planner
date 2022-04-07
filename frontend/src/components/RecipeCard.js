@@ -25,7 +25,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
     const intervalID = setInterval(() => {
       if (loggedIn) {
         const checkSaved = async () => {
-          const { data } = await axios.post('/api/recipes/checksaved', { id })
+          const { data } = await axios.get(`/api/recipes/checksaved/${id}`)
           setRecipeSaved(data)
         }
         checkSaved()
@@ -142,7 +142,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
                       
                   </form>
                   <div className="my-2">
-                    <label htmlFor="day">Day: </label>
+                    <label htmlFor="day" className="font-bold">Day: </label>
                     <select 
                       id="day" 
                       className="outline-0"
@@ -154,7 +154,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
                     </select>
                   </div>
                   <div className="my-2">
-                    <label htmlFor="time">Time: </label>
+                    <label htmlFor="time" className="font-bold">Time: </label>
                     <select 
                       id="time" 
                       className="outline-0"

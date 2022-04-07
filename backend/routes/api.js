@@ -17,12 +17,10 @@ router.get('/recipes/saved', isAuthenticated, async (req, res, next) => {
   }
 })
 
-router.post('/recipes/checksaved', isAuthenticated, async (req, res, next) => {
-  const { id } = req.body
-
+router.get('/recipes/checksaved/:id', isAuthenticated, async (req, res, next) => {
   try {
-    const recipes = await User.find({ username: req.session.username, recipes: { $all: [id] }})
-    res.send(recipes.length !== 0)
+    const { recipes } = await User.findOne({ username: req.session.username })
+    res.send(recipes.include(req.params.id))
   } catch (err) {
     next(err)
   }
