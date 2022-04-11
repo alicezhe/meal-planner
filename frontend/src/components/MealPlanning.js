@@ -14,10 +14,15 @@ const MealPlanning = () => {
 
   useEffect(() => {
     const intervalID = setInterval(() => {
+        const checkLoggedIn = async () => {
+          const { data } = await axios.get('/account/isLoggedIn')
+          setLoggedIn(data)
+        }
         const getPlan = async () => {
           const { data } = await axios.get('/api/plan')
           setPlan(data.plan)
         }
+        checkLoggedIn()
         getPlan()
       }, 1000)
     return () => clearInterval(intervalID)
@@ -26,7 +31,7 @@ const MealPlanning = () => {
   return (
     <>
       <div className="flex flex-col justify-start w-full h-full bg-light-gray rounded-3xl p-12">
-        <Navbar page="planning" loggedIn={true} />
+        <Navbar page="planning" loggedIn={loggedIn} />
         <div className="overflow-hidden h-[90%]">
           <div className="grid grid-cols-7 gap-6 h-full">
             {days.map(day => (

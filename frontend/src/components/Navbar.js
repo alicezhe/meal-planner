@@ -4,12 +4,13 @@ import { LogIn, LogOut } from 'react-feather'
 import { useNavigate, Link } from 'react-router-dom'
 
 const Navbar = ({ loggedIn, page, title }) => {
-
-  const apiKey = '3f220cadbc3646659ca213813545c978'
   let navigate = useNavigate()
 
   const logOut = async () => {
     await axios.post('/account/logout')
+    if (page === 'planning' || page === 'saved') {
+      navigate('/')
+    }
   }
 
   return (
