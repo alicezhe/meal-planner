@@ -114,9 +114,9 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
           />
         )}
       </div>
-      <div className={`bg-[url(${recipe.image})] h-1/2 bg-center bg-no-repeat bg-cover rounded-t-[30px]`} onClick={goToRecipe}></div>
+      <div className={`${recipe.image ? `bg-[url(${recipe.image})]` : 'bg-medium-gray'} h-1/2 bg-center bg-no-repeat bg-cover rounded-t-[30px]`} onClick={goToRecipe}></div>
       <div className="w-full h-1/2 p-4 rounded-b-[30px]">
-        <div className="h-full pb-2 overflow-y-hidden">  
+        <div className="h-full pb-2 overflow-y-scroll">  
           <h3 className="text-red text-xl font-semibold text-center mb-2">{recipe.title}</h3>
           <div className="w-full text-center mb-2 text-dark-gray">
             {(ingredients && ingredients.length !== 0) && (

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { React, useState, useEffect } from 'react'
 import { WithContext as ReactTags } from 'react-tag-input'
-import { Search } from 'react-feather'
+import { Repeat } from 'react-feather'
 
 import Navbar from './Navbar'
 import RecipeCard from './RecipeCard'
@@ -94,7 +94,7 @@ const Home = () => {
             <div className="h-fit lg:flex lg:justify-between mt-4">
               <div className="h-fit flex items-start justify-center">
                 <div className="h-[40px] w-[40px] bg-red text-white flex justify-center items-center rounded-xl inline-block cursor-pointer">
-                  <Search onClick={() => setByRecipe(!byRecipe)}/>
+                  <Repeat onClick={() => setByRecipe(!byRecipe)}/>
                 </div>
                 {byRecipe && (
                   <form onSubmit={handleSubmit} className="flex justify-items-center h-full">

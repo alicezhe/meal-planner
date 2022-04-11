@@ -71,7 +71,7 @@ const RecipePage = () => {
         <div className="overflow-y-scroll scroll-div">
           <div className="grid grid-cols-none md:grid-cols-3 my-4">
             <div className="md:col-span-1 w-full h-[250px]">
-              <div className={`relative w-full h-full rounded-2xl bg-[url('${recipe.image}')] bg-no-repeat bg-center bg-cover`}>
+              <div className={`relative w-full h-full rounded-2xl ${recipe.image ? `bg-[url(${recipe.image})]` : 'bg-medium-gray'} bg-no-repeat bg-center bg-cover`}>
                 <div className="absolute top-0 right-0 flex justify-end m-4">
                   {(loggedIn && !recipeSaved) && (
                     <Bookmark 
