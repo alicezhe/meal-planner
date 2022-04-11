@@ -1,7 +1,5 @@
 import axios from 'axios'
 import { React, useState, useEffect } from 'react'
-import { WithContext as ReactTags } from 'react-tag-input'
-import { Filter } from 'react-feather'
 
 import Navbar from './Navbar'
 import MealPlanCard from './MealPlanCard'
@@ -24,14 +22,6 @@ const MealPlanning = () => {
       }, 1000)
     return () => clearInterval(intervalID)
   }, [])
-  
-  const view = () => {
-    days.map(day => {
-      times.map(time => {
-        plan[day][time].map(recipe => console.log(recipe.title))
-      })
-    })
-  }
   
   return (
     <>

@@ -5,6 +5,7 @@ const isAuthenticated = require('../middlewares/isAuthenticated')
 const router = express.Router()
 
 const User = require('../models/user')
+const Plan = require('../models/plan')
 
 router.get('/users', async (req, res, next) => {
   try {
@@ -20,6 +21,14 @@ router.post('/signup', async (req, res, next) => {
 
   try {
     await User.create({ username, password, name })
+
+    req.session.fname = name.fname
+    req.session.username = username
+    req.session.password = password
+
+    const data = await Plan.create({ username: req.session.username })
+    console.log(data)
+
     res.send('User has signed up successfully.')
   } catch (err) {
     next(err)
@@ -65,6 +74,16 @@ router.post('/deleteall', async (req, res, next) => {
   try {
     await User.deleteMany({})
     res.send('Deleted all users.')
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/deleteone', async (req, res, next) => {
+  const { username } = req.body
+  try {
+    await User.deleteOne({ username: username })
+    res.send('Deleted one user.')
   } catch (err) {
     next(err)
   }

@@ -7,7 +7,7 @@ const userSchema = new Schema({
   name: {
     fname: { type: String, required: true},
     lname: { type: String, required: true }
-  }
+  },
 })
 
 module.exports = model('User', userSchema)

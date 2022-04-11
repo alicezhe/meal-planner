@@ -182,7 +182,7 @@ const Home = () => {
               <RecipeCard 
                 key={result.id}
                 id={result.id}
-                loggedIn={loggedIn !== 0}
+                loggedIn={loggedIn.length !== 0}
                 ingredients={result.missedIngredients?result.missedIngredients:[]}
               />
             )}
