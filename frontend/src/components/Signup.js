@@ -24,10 +24,18 @@ const Signup = () => {
       if (response.data !== 'User has signed up successfully.') {
         window.alert(response.data)
       } else {
+        loginUser()
         navigate('/')
       }
     }, (error) => {
       window.alert(error)
+    })
+  }
+
+  const loginUser = async () => {
+    await axios.post('/account/login', { 
+      username: formUsername,
+      password: formPassword,
     })
   }
 
