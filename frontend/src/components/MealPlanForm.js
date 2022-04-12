@@ -14,6 +14,8 @@ const MealPlanForm = ({ setEditingOn, id, title, image, canCancel }) => {
     .then((response) => {
       if (response.data !== 'User has successfully added recipe to plan.') {
         window.alert(response.data)
+      } else {
+        window.alert("Meal added!")
       }
     }, (error) => {
       window.alert(error)
