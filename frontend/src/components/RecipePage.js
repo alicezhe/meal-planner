@@ -3,6 +3,7 @@ import { React, useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import parse from 'html-react-parser'
 import Navbar from './Navbar'
+import MealPlanForm from './MealPlanForm'
 import { Bookmark } from 'react-feather'
 
 const RecipePage = () => {
@@ -12,7 +13,7 @@ const RecipePage = () => {
   const [loggedIn, setLoggedIn] = useState(false)
   const [recipeSaved, setRecipeSaved] = useState(false)
 
-  const apiKey = '3f220cadbc3646659ca213813545c978'
+  const apiKey = '93c826ea462347fca104e57df38fcf1b'
 
   useEffect(() => {
     const loadRecipe = async () => {
@@ -107,6 +108,10 @@ const RecipePage = () => {
                     if (ingredient.id && ingredient.original) return <li key={ingredient.id} className="my-2">{ingredient.original}</li>
                   })}
                 </ul>
+              </div>
+              <div>
+                <h3 className="text-red text-xl font-bold my-3">Add to Meal Plan</h3>
+                <MealPlanForm id={id} title={recipe.title} image={recipe.image} canCancel={false}/>
               </div>
             </div>
             <div className="md:col-span-2">

@@ -1,20 +1,16 @@
 import { React, useState, useEffect } from 'react'
 import axios from 'axios'
 import parse from 'html-react-parser'
-import { Bookmark, Edit2, Check, X } from 'react-feather'
+import { Bookmark, Edit2 } from 'react-feather'
 import { useNavigate, createSearchParams, generatePath } from 'react-router-dom'
+import MealPlanForm from './MealPlanForm'
 
 const RecipeCard = ({ id, loggedIn, ingredients }) => {
-  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-  const times = ['Breakfast', 'Lunch', 'Dinner', 'Other']
-
   const [recipe, setRecipe] = useState({})
   const [recipeSaved, setRecipeSaved] = useState(false)
   const [editingOn, setEditingOn] = useState(false)
-  const [selectedDay, setSelectedDay] = useState(days[0])
-  const [selectedTime, setSelectedTime] = useState(times[0])
 
-  const apiKey = '3f220cadbc3646659ca213813545c978'
+  const apiKey = '93c826ea462347fca104e57df38fcf1b'
 
   let navigate = useNavigate()
   const params = { id }
@@ -73,17 +69,6 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
     navigate(path)
   }
   
-  const addToPlan = async () => {
-    await axios.post('/api/plan/add', { id, title:recipe.title, image:recipe.image, day: selectedDay, time: selectedTime })
-    .then((response) => {
-      if (response.data !== 'User has successfully added recipe to plan.') {
-        window.alert(response.data)
-      }
-    }, (error) => {
-      window.alert(error)
-    })
-  }
-
   return (
     <div className="relative h-[400px] bg-white rounded-[30px] m-2 hover:drop-shadow-md transition duration-300"> 
       <div className="absolute top-0 right-0 flex justify-end m-4">
@@ -116,7 +101,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
       </div>
       <div className={`${recipe.image ? `bg-[url(${recipe.image})]` : 'bg-medium-gray'} h-1/2 bg-center bg-no-repeat bg-cover rounded-t-[30px]`} onClick={goToRecipe}></div>
       <div className="w-full h-1/2 p-4 rounded-b-[30px]">
-        <div className="h-full pb-2 overflow-y-scroll">  
+        <div className="h-full pb-2 overflow-y-scroll scroll-div">  
           <h3 className="text-red text-xl font-semibold text-center mb-2">{recipe.title}</h3>
           <div className="w-full text-center mb-2 text-dark-gray">
             {(ingredients && ingredients.length !== 0) && (
@@ -136,52 +121,13 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
               </>
             )}
             {editingOn && (
-              <>
-                <div>
-                  <form>
-                      
-                  </form>
-                  <div className="my-2">
-                    <label htmlFor="day" className="font-bold">Day: </label>
-                    <select 
-                      id="day" 
-                      className="outline-0"
-                      value={selectedDay}
-                      onChange={e => setSelectedDay(e.target.value)}>
-                      {days.map(day => (
-                        <option key={day} value={`${day.toLowerCase()}`}>{day}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="my-2">
-                    <label htmlFor="time" className="font-bold">Time: </label>
-                    <select 
-                      id="time" 
-                      className="outline-0"
-                      value={selectedTime}
-                      onChange={e => setSelectedTime(e.target.value)}>
-                      {times.map(time => (
-                        <option key={time} value={`${time.toLowerCase()}`}>{time}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div className="flex justify-end">
-                  <Check 
-                    className="text-dark-gray hover:text-red duration-200 transition cursor-pointer" 
-                    strokeWidth={4}
-                    onClick={() => {
-                      addToPlan()
-                      setEditingOn(false)
-                    }}
-                  />
-                  <X 
-                    className="text-dark-gray hover:text-red duration-200 transition cursor-pointer"
-                    strokeWidth={4}
-                    onClick={() => setEditingOn(false)}
-                  />
-                </div>
-              </>
+              <MealPlanForm 
+                setEditingOn={setEditingOn}
+                title={recipe.title}
+                image={recipe.image}
+                id={id}
+                canCancel={true}
+              />
             )}
           </div>
         </div>
