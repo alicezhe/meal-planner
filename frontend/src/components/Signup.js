@@ -11,82 +11,30 @@ const Signup = () => {
 
   let navigate = useNavigate()
 
-  // const signupUser = async () => {
-  //   await axios.post('/account/signup', { 
-  //     username: formUsername,
-  //     password: formPassword,
-  //     name: { 
-  //       fname: formFname,
-  //       lname: formLname,
-  //     } 
-  //   })
-  //   .then((response) => {
-  //     if (response.data !== 'User has signed up successfully.') {
-  //       window.alert(response.data)
-  //     } else {
-  //       loginUser()
-  //       navigate('/')
-  //     }
-  //   }, (error) => {
-  //     window.alert(error)
-  //   })
-  // }
-
-  // const loginUser = async () => {
-  //   await axios.post('/account/login', { 
-  //     username: formUsername,
-  //     password: formPassword,
-  //   })
-  //   .then(() => {
-  //     initPlan()
-  //   })
-  // }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     e.stopPropagation()
 
-    const data1 = await axios.post('/account/signup', { 
-      username: formUsername,
-      password: formPassword,
-      name: { 
-        fname: formFname,
-        lname: formLname,
-      } 
-    })
-    navigate('/')
-
-    // if (data1) {
-    //   const data2 = await axios.post('/account/login', { 
-    //     username: formUsername,
-    //     password: formPassword,
-    //   })
-
-    //   if (data2) {
-    //     const data3 = await axios.post('/api/plan/create')
-    //     console.log(data3)
-    //   }
-    // }
-
-    // axios.all([
-    //   axios.post('/account/signup', { 
-    //     username: formUsername,
-    //     password: formPassword,
-    //     name: { 
-    //       fname: formFname,
-    //       lname: formLname,
-    //     } 
-    //   }),
-    //   axios.post('/account/login', { 
-    //     username: formUsername,
-    //     password: formPassword,
-    //   }),
-    //   axios.post('/api/plan/create')
-    // ]).then(axios.spread((signUpRes, logInRes, planRes) => {
-    //   console.log(signUpRes)
-    //   console.log(logInRes)
-    //   console.log(planRes)
-    // }))
+    axios.all([
+      axios.post('/account/signup', { 
+        username: formUsername,
+        password: formPassword,
+        name: { 
+          fname: formFname,
+          lname: formLname,
+        } 
+      }),
+      axios.post('/api/plan/create', { username: formUsername }),
+      axios.post('/account/login', { 
+        username: formUsername,
+        password: formPassword,
+      })
+    ]).then(axios.spread((signUpRes, planRes, logInRes) => {
+      console.log("signup", signUpRes)
+      console.log("login", logInRes)
+      console.log("plna", planRes)
+      navigate('/')
+    }))
   }
 
   return (

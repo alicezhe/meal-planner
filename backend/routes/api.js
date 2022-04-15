@@ -48,8 +48,10 @@ router.post('/recipes/unsave', isAuthenticated, async (req, res, next) => {
 })
 
 router.post('/plan/create', async (req, res, next) => {
+  const { username } = req.body
+
   try {
-    await Plan.create({ username: req.session.username })
+    await Plan.create({ username: username })
     res.json('User has successfully created a meal plan.')
   } catch (err) {
     next(err)

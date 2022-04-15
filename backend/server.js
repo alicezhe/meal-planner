@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 app.use(express.static('dist'))
 
-const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://alicehe:cis197@cluster0.vclos.mongodb.net/testagaindb?retryWrites=true&w=majority'
+const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://alicehe:cis197@cluster0.vclos.mongodb.net/recipesdb?retryWrites=true&w=majority'
 
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,

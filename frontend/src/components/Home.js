@@ -25,7 +25,7 @@ const Home = () => {
 
   useEffect(() => {
     const getRandomRecipes = async () => {
-      const url = encodeURI(`https://api.spoonacular.com/recipes/random?number=4&apiKey=${apiKey}`)
+      const url = encodeURI(`https://api.spoonacular.com/recipes/random?number=1&apiKey=${apiKey}`)
       const { data } = await axios.get(url)
       setResults(data.recipes)
     }

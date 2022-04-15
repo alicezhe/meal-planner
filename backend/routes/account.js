@@ -21,14 +21,6 @@ router.post('/signup', async (req, res, next) => {
 
   try {
     await User.create({ username, password, name })
-
-    req.session.fname = name.fname
-    req.session.username = username
-    req.session.password = password
-
-    const data = await Plan.create({ username: req.session.username })
-    console.log(data)
-
     res.send('User has signed up successfully.')
   } catch (err) {
     next(err)
