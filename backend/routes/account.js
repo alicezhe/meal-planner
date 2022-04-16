@@ -4,8 +4,7 @@ const isAuthenticated = require('../middlewares/isAuthenticated')
 
 const router = express.Router()
 
-const User = require('../models/user')
-const Plan = require('../models/plan')
+const User = require('../models/User')
 
 router.get('/users', async (req, res, next) => {
   try {
@@ -74,7 +73,7 @@ router.post('/deleteall', async (req, res, next) => {
 router.post('/deleteone', async (req, res, next) => {
   const { username } = req.body
   try {
-    await User.deleteOne({ username: username })
+    await User.deleteOne({ username })
     res.send('Deleted one user.')
   } catch (err) {
     next(err)

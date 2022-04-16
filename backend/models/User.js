@@ -5,8 +5,8 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   recipes: { type: Array },
   name: {
-    fname: { type: String, required: true},
-    lname: { type: String, required: true }
+    fname: { type: String, required: true },
+    lname: { type: String, required: true },
   },
 })
 

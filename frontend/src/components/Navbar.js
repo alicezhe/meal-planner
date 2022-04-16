@@ -4,7 +4,7 @@ import { LogIn, LogOut } from 'react-feather'
 import { useNavigate, Link } from 'react-router-dom'
 
 const Navbar = ({ loggedIn, page, title }) => {
-  let navigate = useNavigate()
+  const navigate = useNavigate()
 
   const logOut = async () => {
     await axios.post('/account/logout')
@@ -17,8 +17,10 @@ const Navbar = ({ loggedIn, page, title }) => {
     <div className="grid grid-cols-1 lg:grid-cols-2 mb-2">
       <div className="font-bold text-3xl">
         {(loggedIn && (page === 'home')) && (
-          <h1>Welcome back, <span className="text-red">{loggedIn}</span></h1>
-          
+          <h1>
+            Welcome back,
+            <span className="text-red">{loggedIn}</span>
+          </h1>
         )}
         {(!loggedIn && (page === 'home')) && (<h1>Welcome!</h1>)}
         {(page === 'saved') && (<h1 className="text-red">Saved Recipes</h1>)}
@@ -39,7 +41,7 @@ const Navbar = ({ loggedIn, page, title }) => {
             <Link to="/saved" className="mx-2 lg:mx-6 hover:text-red transition duration-300">Saved Recipes</Link>
             <Link to="/planning" className="mx-2 lg:mx-6 hover:text-red transition duration-300">Meal Planning</Link>
             <LogOut
-              className="ml-6 inline-block hover:text-red transition duration-300 cursor-pointer"  
+              className="ml-6 inline-block hover:text-red transition duration-300 cursor-pointer"
               strokeWidth={3}
               onClick={logOut}
             />

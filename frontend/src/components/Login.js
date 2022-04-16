@@ -6,22 +6,22 @@ const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  let navigate = useNavigate()
+  const navigate = useNavigate()
 
   const loginUser = async () => {
-    await axios.post('/account/login', {username, password})
-    .then((response) => {
-      if (response.data !== 'User has logged in successfully.') {
-        window.alert(response.data)
-      } else {
-        navigate('/')
-      }
-    }, (error) => {
-      window.alert(error)
-    })
+    await axios.post('/account/login', { username, password })
+      .then(response => {
+        if (response.data !== 'User has logged in successfully.') {
+          window.alert(response.data)
+        } else {
+          navigate('/')
+        }
+      }, error => {
+        window.alert(error)
+      })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault()
     e.stopPropagation()
     loginUser()
@@ -69,7 +69,8 @@ const Login = () => {
         </button>
       </form>
       <p className="text-center">
-        Don&#39;t have an account? <span><Link to="/signup" className="text-red hover:text-medium-gray transition duration-300">Sign up here!</Link></span>
+        Don&#39;t have an account?
+        <span><Link to="/signup" className="text-red hover:text-medium-gray transition duration-300"> Sign up here!</Link></span>
       </p>
     </div>
   )

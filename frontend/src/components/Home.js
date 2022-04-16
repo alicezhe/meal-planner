@@ -18,9 +18,9 @@ const Home = () => {
 
   const KeyCodes = {
     comma: 188,
-    enter: 13
+    enter: 13,
   }
-  
+
   const delimiters = [KeyCodes.comma, KeyCodes.enter]
 
   useEffect(() => {
@@ -43,17 +43,6 @@ const Home = () => {
     return () => clearInterval(intervalID)
   }, [])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    if (byRecipe) {
-      searchRecipes() 
-    } else {
-      searchIngredients()
-    }
-    setQuery('')
-  }
-
   const searchRecipes = async () => {
     const url = encodeURI(`https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${apiKey}&number=4`)
     const { data } = await axios.get(url)
@@ -68,10 +57,21 @@ const Home = () => {
     setResults(data)
   }
 
-  const searchCuisine = async (cuisine) => {
+  const searchCuisine = async cuisine => {
     const url = encodeURI(`https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisine}&number=4&apiKey=${apiKey}`)
     const { data } = await axios.get(url)
     setResults(data.results)
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (byRecipe) {
+      searchRecipes()
+    } else {
+      searchIngredients()
+    }
+    setQuery('')
   }
 
   const handleDelete = i => setTags(tags.filter((tag, index) => index !== i))
@@ -94,11 +94,11 @@ const Home = () => {
             <div className="h-fit lg:flex lg:justify-between mt-4">
               <div className="h-fit flex items-start justify-center">
                 <div className="h-[40px] w-[40px] bg-red text-white flex justify-center items-center rounded-xl inline-block cursor-pointer">
-                  <Repeat onClick={() => setByRecipe(!byRecipe)}/>
+                  <Repeat onClick={() => setByRecipe(!byRecipe)} />
                 </div>
                 {byRecipe && (
                   <form onSubmit={handleSubmit} className="flex justify-items-center h-full">
-                    <input 
+                    <input
                       className="rounded-xl mx-4 mb-3 h-[40px] w-[450px] py-2 px-4 outline-0"
                       value={query}
                       onChange={e => setQuery(e.target.value)}
@@ -136,7 +136,7 @@ const Home = () => {
                           editTagInputField: 'editTagInputField',
                           clearAll: 'clearAllClass',
                         }}
-                        placeholder='Search by ingredients...'
+                        placeholder="Search by ingredients..."
                       />
                     </div>
                     <button
@@ -149,28 +149,28 @@ const Home = () => {
                 )}
               </div>
               <div className="flex justify-center">
-                <div onClick={() => searchCuisine("Chinese")}>
-                  <button className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
+                <div onClick={() => searchCuisine('Chinese')}>
+                  <button type="button" className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
                     &#129377; Chinese
                   </button>
                 </div>
                 <div onClick={() => searchCuisine("Italian")}>
-                  <button className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
+                  <button type="button" className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
                     &#127837; Italian
                   </button>
                 </div>
                 <div onClick={() => searchCuisine("Japanese")}>
-                  <button className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
+                  <button type="button" className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
                     &#127843; Japanese
                   </button>
                 </div>
                 <div onClick={() => searchCuisine("Mexican")}>
-                  <button className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
+                  <button type="button" className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
                     &#127790; Mexican
                   </button>
                 </div>
                 <div onClick={() => searchCuisine("French")}>
-                  <button className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
+                  <button type="button" className="p-2 bg-white rounded-lg mx-1 hover:text-white hover:bg-red duration-200 transition">
                     &#129366; French
                   </button>
                 </div>
@@ -178,14 +178,14 @@ const Home = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8">
-            {results.map(result => 
-              <RecipeCard 
+            {results.map(result => (
+              <RecipeCard
                 key={result.id}
                 id={result.id}
                 loggedIn={loggedIn.length !== 0}
-                ingredients={result.missedIngredients?result.missedIngredients:[]}
+                ingredients={result.missedIngredients ? result.missedIngredients : []}
               />
-            )}
+            ))}
           </div>
         </div>
       </div>

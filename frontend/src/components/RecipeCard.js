@@ -12,7 +12,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
 
   const apiKey = '93c826ea462347fca104e57df38fcf1b'
 
-  let navigate = useNavigate()
+  const navigate = useNavigate()
   const params = { id }
 
   useEffect(() => {
@@ -32,65 +32,70 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
     const loadRecipe = async () => {
       const { data } = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`)
       const kcal = data.nutrition.nutrients[0].amount
-      const { title, image, summary, readyInMinutes: time} = data
-      setRecipe({ title, image, summary: parse(summary), time, kcal })
+      const {
+        title, image, summary, readyInMinutes: time,
+      } = data
+      setRecipe({
+        title, image, summary: parse(summary), time, kcal,
+      })
     }
     loadRecipe()
   }, [])
-  
+
   const save = async () => {
     await axios.post('/api/recipes/save', { id })
-    .then((response) => {
-      setRecipeSaved(true)
-      if (response.data !== 'User has successfully saved recipe.') {
-        window.alert(response.data)
-      }
-    }, (error) => {
-      window.alert(error)
-    })
+      .then(response => {
+        setRecipeSaved(true)
+        if (response.data !== 'User has successfully saved recipe.') {
+          window.alert(response.data)
+        }
+      }, error => {
+        window.alert(error)
+      })
   }
 
   const unsave = async () => {
     await axios.post('/api/recipes/unsave', { id })
-    .then((response) => {
-      if (response.data !== 'User has successfully unsaved recipe.') {
-        window.alert(response.data)
-      }
-    }, (error) => {
-      window.alert(error)
-    })
+      .then(response => {
+        if (response.data !== 'User has successfully unsaved recipe.') {
+          window.alert(response.data)
+        }
+      }, error => {
+        window.alert(error)
+      })
   }
 
   const goToRecipe = () => {
-    const path = generatePath(":url?:queryString", {
+    const path = generatePath(':url?:queryString', {
       url: '/recipes',
-      queryString: createSearchParams(params).toString()
+      queryString: createSearchParams(params).toString(),
     })
     navigate(path)
   }
-  
+
   return (
-    <div className="relative h-[400px] bg-white rounded-[30px] m-2 hover:drop-shadow-md transition duration-300"> 
+    <div className="relative h-[400px] bg-white rounded-[30px] m-2 hover:drop-shadow-md transition duration-300">
       <div className="absolute top-0 right-0 flex justify-end m-4">
         {loggedIn && (
           <Edit2
             className="text-white mx-2 hover:text-red transition duraction-200 cursor-pointer"
             strokeWidth={3}
-            width={18} 
+            width={18}
             height={18}
-            onClick={() => setEditingOn(!editingOn)} />
+            onClick={() => setEditingOn(!editingOn)}
+          />
         )}
         {(loggedIn && !recipeSaved) && (
-          <Bookmark 
+          <Bookmark
             className="text-white hover:fill-white cursor-pointer"
-            strokeWidth={3} 
+            strokeWidth={3}
             width={18}
             height={18}
             onClick={() => save()}
           />
         )}
         {(loggedIn && recipeSaved) && (
-          <Bookmark 
+          <Bookmark
             className="text-white hover:fill-transparent fill-white cursor-pointer"
             strokeWidth={3}
             width={18}
@@ -99,13 +104,15 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
           />
         )}
       </div>
-      <div className={`${recipe.image ? `bg-[url(${recipe.image})]` : 'bg-medium-gray'} h-1/2 bg-center bg-no-repeat bg-cover rounded-t-[30px]`} onClick={goToRecipe}></div>
+      <div className={`${recipe.image ? `bg-[url(${recipe.image})]` : 'bg-medium-gray'} h-1/2 bg-center bg-no-repeat bg-cover rounded-t-[30px]`} onClick={goToRecipe} />
       <div className="w-full h-1/2 p-4 rounded-b-[30px]">
-        <div className="h-full pb-2 overflow-y-scroll scroll-div">  
+        <div className="h-full pb-2 overflow-y-scroll scroll-div">
           <h3 className="text-red text-xl font-semibold text-center mb-2">{recipe.title}</h3>
           <div className="w-full text-center mb-2 text-dark-gray">
             {(ingredients && ingredients.length !== 0) && (
-              <p className="text-red">You are missing {ingredients.map(i => i.name).join(', ').replace(/, ([^,]*)$/, ' and $1')}.</p>
+              <p className="text-red">
+                You are missing {ingredients.map(i => i.name).join(', ').replace(/, ([^,]*)$/, ' and $1')}.
+              </p>
             )}
           </div>
           <div>
@@ -121,12 +128,12 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
               </>
             )}
             {editingOn && (
-              <MealPlanForm 
+              <MealPlanForm
                 setEditingOn={setEditingOn}
                 title={recipe.title}
                 image={recipe.image}
                 id={id}
-                canCancel={true}
+                canCancel
               />
             )}
           </div>

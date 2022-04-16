@@ -9,30 +9,27 @@ const Signup = () => {
   const [formFname, setFormFname] = useState('')
   const [formLname, setFormLname] = useState('')
 
-  let navigate = useNavigate()
+  const navigate = useNavigate()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault()
     e.stopPropagation()
 
     axios.all([
-      axios.post('/account/signup', { 
+      axios.post('/account/signup', {
         username: formUsername,
         password: formPassword,
-        name: { 
+        name: {
           fname: formFname,
           lname: formLname,
-        } 
+        },
       }),
       axios.post('/api/plan/create', { username: formUsername }),
-      axios.post('/account/login', { 
+    ]).then(axios.spread((signUpRes, planRes) => {
+      axios.post('/account/login', {
         username: formUsername,
         password: formPassword,
       })
-    ]).then(axios.spread((signUpRes, planRes, logInRes) => {
-      console.log("signup", signUpRes)
-      console.log("login", logInRes)
-      console.log("plna", planRes)
       navigate('/')
     }))
   }
@@ -107,7 +104,8 @@ const Signup = () => {
         </button>
       </form>
       <p className="text-center">
-        Already have an account? <span><Link to="/login" className="text-red hover:text-medium-gray transition duration-300">Login in here!</Link></span>
+        Already have an account?
+        <span><Link to="/login" className="text-red hover:text-medium-gray transition duration-300"> Login in here!</Link></span>
       </p>
     </div>
   )
