@@ -40,12 +40,8 @@ app.get('*', (req, res) => {
 
 app.use((err, req, res, next) => res.send(`ERROR: ${err.message}`))
 
-app.use(express.static(path.join(__dirname, 'client', 'build')))
-
-// ...
-// Right before your app.listen(), add this:
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+  res.sendFile(path.join(__dirname, '/dist/index.html'))
 })
 
 app.listen(port, () => {
