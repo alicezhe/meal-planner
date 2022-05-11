@@ -18,8 +18,7 @@ const Navbar = ({ loggedIn, page, title }) => {
       <div className="font-bold text-3xl">
         {(loggedIn && (page === 'home')) && (
           <h1>
-            Welcome back,
-            <span className="text-red">{loggedIn}</span>
+            Welcome back, <span className="text-red">{loggedIn}</span>
           </h1>
         )}
         {(!loggedIn && (page === 'home')) && (<h1>Welcome!</h1>)}

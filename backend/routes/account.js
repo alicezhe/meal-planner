@@ -19,8 +19,8 @@ router.post('/signup', async (req, res, next) => {
   const { username, password, name } = req.body
 
   try {
-    await User.create({ username, password, name })
-    res.send('User has signed up successfully.')
+    const data = await User.create({ username, password, name })
+    res.send(data)
   } catch (err) {
     next(err)
   }

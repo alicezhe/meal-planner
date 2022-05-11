@@ -10,7 +10,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
   const [recipeSaved, setRecipeSaved] = useState(false)
   const [editingOn, setEditingOn] = useState(false)
 
-  const apiKey = '93c826ea462347fca104e57df38fcf1b'
+  const apiKey = '3f220cadbc3646659ca213813545c978'
 
   const navigate = useNavigate()
   const params = { id }

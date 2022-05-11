@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const path = require('path')
 const session = require('cookie-session')
+require('dotenv').config()
 
 const accountRouter = require('./routes/account')
 const apiRouter = require('./routes/api')
@@ -12,9 +13,7 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 app.use(express.static('dist'))
 
-const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://alicehe:cis197@cluster0.vclos.mongodb.net/recipesdb?retryWrites=true&w=majority'
-
-mongoose.connect(MONGO_URI, {
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

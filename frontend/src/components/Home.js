@@ -14,7 +14,7 @@ const Home = () => {
   const [loggedIn, setLoggedIn] = useState('')
   const [byRecipe, setByRecipe] = useState(true)
 
-  const apiKey = '93c826ea462347fca104e57df38fcf1b'
+  const apiKey = '3f220cadbc3646659ca213813545c978'
 
   const KeyCodes = {
     comma: 188,
@@ -25,7 +25,7 @@ const Home = () => {
 
   useEffect(() => {
     const getRandomRecipes = async () => {
-      const url = encodeURI(`https://api.spoonacular.com/recipes/random?number=1&apiKey=${apiKey}`)
+      const url = encodeURI(`https://api.spoonacular.com/recipes/random?number=8&apiKey=${apiKey}`)
       const { data } = await axios.get(url)
       setResults(data.recipes)
     }
@@ -44,7 +44,7 @@ const Home = () => {
   }, [])
 
   const searchRecipes = async () => {
-    const url = encodeURI(`https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${apiKey}&number=4`)
+    const url = encodeURI(`https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${apiKey}&number=8`)
     const { data } = await axios.get(url)
 
     setResults(data.results)
@@ -52,13 +52,13 @@ const Home = () => {
 
   const searchIngredients = async () => {
     const parsedSearch = tags.map(tag => tag.text).join(',+')
-    const url = encodeURI(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${parsedSearch}&ranking=2&number=4&apiKey=${apiKey}`)
+    const url = encodeURI(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${parsedSearch}&ranking=2&number=8&apiKey=${apiKey}`)
     const { data } = await axios.get(url)
     setResults(data)
   }
 
   const searchCuisine = async cuisine => {
-    const url = encodeURI(`https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisine}&number=4&apiKey=${apiKey}`)
+    const url = encodeURI(`https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisine}&number=8&apiKey=${apiKey}`)
     const { data } = await axios.get(url)
     setResults(data.results)
   }
