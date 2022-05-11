@@ -13,7 +13,7 @@ const RecipePage = () => {
   const [loggedIn, setLoggedIn] = useState(false)
   const [recipeSaved, setRecipeSaved] = useState(false)
 
-  const apiKey = '3f220cadbc3646659ca213813545c978'
+  const apiKey = process.env.SPOONACULAR_API_KEY
 
   useEffect(() => {
     const loadRecipe = async () => {

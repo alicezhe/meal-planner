@@ -10,7 +10,7 @@ const RecipeCard = ({ id, loggedIn, ingredients }) => {
   const [recipeSaved, setRecipeSaved] = useState(false)
   const [editingOn, setEditingOn] = useState(false)
 
-  const apiKey = '3f220cadbc3646659ca213813545c978'
+  const apiKey = process.env.SPOONACULAR_API_KEY
 
   const navigate = useNavigate()
   const params = { id }
