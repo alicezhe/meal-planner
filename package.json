@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "parcel frontend/index.html",
-    "server": "nodemon backend/server.js",
+    "build": "parcel client/index.html",
+    "server": "nodemon server.js",
     "heroku-postbuild": "npm install && npm run build"
   },
   "keywords": [],
